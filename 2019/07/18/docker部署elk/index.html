@@ -100,16 +100,16 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Docker部署ELK一、简介​    在开源的日志管理方案中，最出名的莫过于 ELK 了。ELK 是三个软件的合称：Elasticsearch、Logstash、Kibana。Spring Cloud作为现在最热门的微服务架构，其分布式的日志输出如果使用传统方式来进行分析查看会非常麻烦，可以直接用ELK来为其日志提供友好的服务，而kafka作为现在大数据消息队列的标准可以作为Spring Clo">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/07/18/docker部署elk/assets/1557038911006.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/18/docker部署elk/assets/1557039435082.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/18/docker部署elk/assets/1557039569329.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/18/docker部署elk/assets/1557041279494.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/18/docker部署elk/assets/1557041419125.png">
-<meta property="og:updated_time" content="2019-07-18T05:44:20.256Z">
+<meta property="og:image" content="http://yoursite.com/.com//1557038911006.png">
+<meta property="og:image" content="http://yoursite.com/.com//1557039435082.png">
+<meta property="og:image" content="http://yoursite.com/.com//1557039569329.png">
+<meta property="og:image" content="http://yoursite.com/.com//1557041279494.png">
+<meta property="og:image" content="http://yoursite.com/.com//1557041419125.png">
+<meta property="og:updated_time" content="2019-07-18T06:12:06.221Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
 <meta name="twitter:description" content="Docker部署ELK一、简介​    在开源的日志管理方案中，最出名的莫过于 ELK 了。ELK 是三个软件的合称：Elasticsearch、Logstash、Kibana。Spring Cloud作为现在最热门的微服务架构，其分布式的日志输出如果使用传统方式来进行分析查看会非常麻烦，可以直接用ELK来为其日志提供友好的服务，而kafka作为现在大数据消息队列的标准可以作为Spring Clo">
-<meta name="twitter:image" content="http://yoursite.com/2019/07/18/docker部署elk/assets/1557038911006.png">
+<meta name="twitter:image" content="http://yoursite.com/.com//1557038911006.png">
 
 
 
@@ -362,7 +362,7 @@
                 
               
 
-              <time title="创建时间：2019-07-18 10:43:22 / 修改时间：13:44:20" itemprop="dateCreated datePublished" datetime="2019-07-18T10:43:22+08:00">2019-07-18</time>
+              <time title="创建时间：2019-07-18 14:00:50 / 修改时间：14:12:06" itemprop="dateCreated datePublished" datetime="2019-07-18T14:00:50+08:00">2019-07-18</time>
             </span>
           
 
@@ -411,7 +411,7 @@
 <h5 id="2、Logstash"><a href="#2、Logstash" class="headerlink" title="2、Logstash"></a>2、Logstash</h5><p>读取原始日志，并对其进行分析和过滤，然后将其转发给其他组件（比如 Elasticsearch）进行索引或存储。Logstash 支持丰富的 Input 和 Output 类型，能够处理各种应用的日志。</p>
 <h5 id="3、Kibana"><a href="#3、Kibana" class="headerlink" title="3、Kibana"></a>3、Kibana</h5><p>Kibana是一个基于 JavaScript 的 Web 图形界面程序，专门用于可视化 Elasticsearch 的数据。Kibana 能够查询 Elasticsearch 并通过丰富的图表展示结果。用户可以创建 Dashboard 来监控系统的日志。</p>
 <h5 id="4、日志处理流程"><a href="#4、日志处理流程" class="headerlink" title="4、日志处理流程"></a>4、日志处理流程</h5><p>下图展示了 Docker 部署环境下典型的 ELK 日志处理流程：</p>
-<p><img src="assets/1557038911006.png" alt="1557038911006"></p>
+<p><img src="/.com//1557038911006.png" alt="1557038911006"></p>
 <p>Logstash 负责从各个 Docker 容器中提取日志，Logstash将日志转发到 Elasticsearch 进行索引和保存，Kibana 分析和可视化数据。</p>
 <h5 id="二、实践流程"><a href="#二、实践流程" class="headerlink" title="二、实践流程"></a>二、实践流程</h5><p>ELK 的部署方案可以非常灵活，在规模较大的生产系统中，ELK 有自己的集群，实现了高可用和负载均衡。这里我们采用最小部署方案：在容器中搭建 ELK。</p>
 <h5 id="1、Docker安装"><a href="#1、Docker安装" class="headerlink" title="1、Docker安装"></a>1、Docker安装</h5><p>通过这个地址下载安装：<a href="https://store.docker.com/editions/community/docker-ce-desktop-windows" target="_blank" rel="noopener">docker下载地址</a></p>
@@ -421,10 +421,10 @@
 <p>我们使用的是 <code>sebp/elk</code> 这个现成的 image，里面已经包含了整个 ELK stack。容器启动后 ELK 各组件将分别监听如下端口：</p>
 <p>5601 - Kibana web 接口<br>9200 - Elasticsearch JSON 接口<br>5044 - Logstash 日志接收接口</p>
 <h5 id="3、访问Kibana"><a href="#3、访问Kibana" class="headerlink" title="3、访问Kibana"></a>3、访问Kibana</h5><p>查看效果：<a href="http://localhost:5601" target="_blank" rel="noopener">http://localhost:5601</a></p>
-<p><img src="assets/1557039435082.png" alt="1557039435082"></p>
+<p><img src="/.com//1557039435082.png" alt="1557039435082"></p>
 <p>当前 Kibana 没有可显示的数据，因为当前 Elasticsearch 还没有任何日志数据。</p>
 <h5 id="4、访问ElasticSearch"><a href="#4、访问ElasticSearch" class="headerlink" title="4、访问ElasticSearch"></a>4、访问ElasticSearch</h5><p>查看效果：<a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a></p>
-<p><img src="assets/1557039569329.png" alt="1557039569329"></p>
+<p><img src="/.com//1557039569329.png" alt="1557039569329"></p>
 <p>确实，目前 Elasticsearch 没有与日志相关的 <code>index</code>。</p>
 <h5 id="5、使用TCP的方式"><a href="#5、使用TCP的方式" class="headerlink" title="5、使用TCP的方式"></a>5、使用TCP的方式</h5><p>由于sebp/elk中logstash的input的方式默认是filebeat,首先们需要进入elk容器中修改input方式。logstash默认会将etc/logstash/conf.d/中的配置文件进行整合然后启动。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it elk /bin/bash 进入容器</span><br><span class="line"> </span><br><span class="line">cd etc/logstash/conf.d/</span><br><span class="line"> </span><br><span class="line">vim 02-beats-input.conf 修改input配置</span><br><span class="line"> </span><br><span class="line">input &#123;    </span><br><span class="line">    tcp &#123;         </span><br><span class="line">        port =&gt; 5044         </span><br><span class="line">        codec =&gt; json_lines     </span><br><span class="line">        </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125; </span><br><span class="line">output&#123;  </span><br><span class="line">    elasticsearch &#123; </span><br><span class="line">    hosts =&gt; [&quot;localhost:9200&quot;] </span><br><span class="line">    </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -441,9 +441,9 @@
 <h5 id="9、配置Pattern"><a href="#9、配置Pattern" class="headerlink" title="9、配置Pattern"></a>9、配置Pattern</h5><p>配置pattern，输入*，匹配所有数据</p>
 <p>选择时间@timestamp，这样数据展示会以时间排序</p>
 <h5 id="10、查看日志"><a href="#10、查看日志" class="headerlink" title="10、查看日志"></a>10、查看日志</h5><p>点击discover，输入服务名称 <code>feign-consumer</code>即可查看相关日志</p>
-<p><img src="assets/1557041279494.png" alt="1557041279494"></p>
+<p><img src="/.com//1557041279494.png" alt="1557041279494"></p>
 <p>访问ElasticSearch <a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a> 也可查找到feign-consumer相关日志信息</p>
-<p><img src="assets/1557041419125.png" alt="1557041419125"></p>
+<p><img src="/.com//1557041419125.png" alt="1557041419125"></p>
 <p>11、整合filebeat</p>
 <p>docker run -d –name filebeat -v /etc/filebeat/filebeat.yml:/filebeat.yml  docker.elastic.co/beats/filebeat:7.0.1</p>
 
