@@ -330,7 +330,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/07/18/docker部署elk/" class="post-title-link" itemprop="url">未命名</a>
+                <a href="/2019/07/18/docker部署elk/" class="post-title-link" itemprop="url">docker部署elk</a>
               
             
           </h1>
@@ -355,7 +355,7 @@
                 
               
 
-              <time title="创建时间：2019-07-18 14:00:50 / 修改时间：14:12:06" itemprop="dateCreated datePublished" datetime="2019-07-18T14:00:50+08:00">2019-07-18</time>
+              <time title="创建时间：2019-07-18 14:15:22 / 修改时间：14:17:39" itemprop="dateCreated datePublished" datetime="2019-07-18T14:15:22+08:00">2019-07-18</time>
             </span>
           
 
@@ -405,8 +405,7 @@
 <h5 id="1、Elasticsearch"><a href="#1、Elasticsearch" class="headerlink" title="1、Elasticsearch"></a>1、Elasticsearch</h5><p>Elasticsearch是一个基于Lucene和Restful接口的分布式搜索擎，设计目标就是要能够处理和搜索巨量的日志数据。</p>
 <h5 id="2、Logstash"><a href="#2、Logstash" class="headerlink" title="2、Logstash"></a>2、Logstash</h5><p>读取原始日志，并对其进行分析和过滤，然后将其转发给其他组件（比如 Elasticsearch）进行索引或存储。Logstash 支持丰富的 Input 和 Output 类型，能够处理各种应用的日志。</p>
 <h5 id="3、Kibana"><a href="#3、Kibana" class="headerlink" title="3、Kibana"></a>3、Kibana</h5><p>Kibana是一个基于 JavaScript 的 Web 图形界面程序，专门用于可视化 Elasticsearch 的数据。Kibana 能够查询 Elasticsearch 并通过丰富的图表展示结果。用户可以创建 Dashboard 来监控系统的日志。</p>
-<h5 id="4、日志处理流程"><a href="#4、日志处理流程" class="headerlink" title="4、日志处理流程"></a>4、日志处理流程</h5><p>下图展示了 Docker 部署环境下典型的 ELK 日志处理流程：</p>
-<p><img src="/.com//1557038911006.png" alt="1557038911006"></p>
+<h5 id="4、日志处理流程"><a href="#4、日志处理流程" class="headerlink" title="4、日志处理流程"></a>4、日志处理流程</h5><p>下图展示了 Docker 部署环境下典型的 ELK 日志处理流程：<img src="/.com//1557038911006.png" alt="1557038911006"></p>
 <p>Logstash 负责从各个 Docker 容器中提取日志，Logstash将日志转发到 Elasticsearch 进行索引和保存，Kibana 分析和可视化数据。</p>
 <h5 id="二、实践流程"><a href="#二、实践流程" class="headerlink" title="二、实践流程"></a>二、实践流程</h5><p>ELK 的部署方案可以非常灵活，在规模较大的生产系统中，ELK 有自己的集群，实现了高可用和负载均衡。这里我们采用最小部署方案：在容器中搭建 ELK。</p>
 <h5 id="1、Docker安装"><a href="#1、Docker安装" class="headerlink" title="1、Docker安装"></a>1、Docker安装</h5><p>通过这个地址下载安装：<a href="https://store.docker.com/editions/community/docker-ce-desktop-windows" target="_blank" rel="noopener">docker下载地址</a></p>
