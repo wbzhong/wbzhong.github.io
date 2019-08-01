@@ -371,7 +371,7 @@
                 
               
 
-              <time title="创建时间：2019-08-01 10:00:25 / 修改时间：10:51:18" itemprop="dateCreated datePublished" datetime="2019-08-01T10:00:25+08:00">2019-08-01</time>
+              <time title="创建时间：2019-08-01 10:00:25 / 修改时间：13:40:06" itemprop="dateCreated datePublished" datetime="2019-08-01T10:00:25+08:00">2019-08-01</time>
             </span>
           
 
@@ -432,8 +432,7 @@
       
         
           
-            <h3 id="分布式事务及解决方案"><a href="#分布式事务及解决方案" class="headerlink" title="分布式事务及解决方案"></a>分布式事务及解决方案</h3><hr>
-<h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>​    在说分布式事务之前，我们先从数据库事务说起。数据库事务有四大特性：原子性(Atomicity )、一致性( Consistency )、隔离性或独立性( Isolation)和持久性(Durabilily)，简称就是ACID，这里不多说。但有一个问题，数据库在提交事务的时候突然断电，它是怎样恢复的呢？一般情况下本地数据库都会包含日志文件和数据库文件，日志文件比数据库文件大得多。数据库进行任何写入操作的时候都是要先写日志的，同样的道理，我们在执行事务的时候数据库首先会记录下这个事务的redo操作日志，然后才开始真正操作数据库，在操作之前首先会把日志文件写入磁盘，那么当突然断电的时候，即使操作没有完成，在重新启动数据库时候，数据库会根据当前数据的情况进行undo回滚或者是redo前滚，这样就保证了数据的强一致性。</p>
+            <h3 id="分布式事务及解决方案"><a href="#分布式事务及解决方案" class="headerlink" title="分布式事务及解决方案"></a>分布式事务及解决方案</h3><h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>​    在说分布式事务之前，我们先从数据库事务说起。数据库事务有四大特性：原子性(Atomicity )、一致性( Consistency )、隔离性或独立性( Isolation)和持久性(Durabilily)，简称就是ACID，这里不多说。但有一个问题，数据库在提交事务的时候突然断电，它是怎样恢复的呢？一般情况下本地数据库都会包含日志文件和数据库文件，日志文件比数据库文件大得多。数据库进行任何写入操作的时候都是要先写日志的，同样的道理，我们在执行事务的时候数据库首先会记录下这个事务的redo操作日志，然后才开始真正操作数据库，在操作之前首先会把日志文件写入磁盘，那么当突然断电的时候，即使操作没有完成，在重新启动数据库时候，数据库会根据当前数据的情况进行undo回滚或者是redo前滚，这样就保证了数据的强一致性。</p>
 <p>​    提出这个问题是因为分布式系统的核心就是处理各种异常情况，这也是分布式系统复杂的地方，因为分布式的网络环境很复杂，这种“断电”故障要比单机多很多，所以我们在做分布式系统的时候，最先考虑的就是这种情况。这些异常可能有 机器宕机、网络异常、存储数据丢失、其他异常等等…</p>
 <p>​    数据库的四大特性已经不能满足分布式事务，于是产生了一些新的理论。</p>
 <h5 id="1、CAP定理"><a href="#1、CAP定理" class="headerlink" title="1、CAP定理"></a>1、CAP定理</h5><p>​    CAP定理是由加州大学伯克利分校Eric Brewer教授提出来的，他指出在分布式系统中，WEB服务无法同时满足一下3个属性:</p>
@@ -474,10 +473,10 @@
 <p>​    项目地址：<a href="http://120.79.168.253:19088/gitlab/zoomlgd/starter/tree/development/txlcn-demo" target="_blank" rel="noopener">txlcn-demo</a></p>
 <hr>
 <h4 id="三、TCC事务模式"><a href="#三、TCC事务模式" class="headerlink" title="三、TCC事务模式"></a>三、TCC事务模式</h4><h5 id="1、框架背景-1"><a href="#1、框架背景-1" class="headerlink" title="1、框架背景"></a>1、框架背景</h5><p>​    在08年的软件开发2.0技术大会上，支付宝程立在PPT<a href="https://wenku.baidu.com/view/be946bec0975f46527d3e104.html" target="_blank" rel="noopener">大规模SOA系统中的分布事务处理</a>，提出TCC概念。目前很多分布式事务开源项目也都是基于TCC的思想实现。</p>
-<h5 id="2、事务控制原理图-1"><a href="#2、事务控制原理图-1" class="headerlink" title="2、事务控制原理图"></a>2、事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556589892129.png" alt="1556589892129"></p>
+<h5 id="2、事务控制原理图-1"><a href="#2、事务控制原理图-1" class="headerlink" title="2、事务控制原理图"></a>2、事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556589892129.png" alt="1556589892129"></p>
 <p>​    事务开始时，业务应用会向事务协调器注册启动事务。之后业务应用会调用所有服务的try接口，完成一阶段准备。之后事务协调器会根据try接口返回情况，决定调用confirm接口或者cancel接口。如果接口调用失败，会进行重试。</p>
 <h5 id="3、核心步骤-1"><a href="#3、核心步骤-1" class="headerlink" title="3、核心步骤"></a>3、核心步骤</h5><p>​    TCC即为Try -Confirm -Cancel，它属于补偿型分布式事务。顾名思义，TCC实现分布式事务一共有三个步骤：    <strong>Try：尝试执行业务</strong><br>​        完成所有业务检查（一致性）<br>​        预留必须业务资源（准隔离性）<br>​    <strong>Confirm：执行业务</strong><br>​        执行任务，使用Try阶段预留的业务资源，需满足幂等性<br>​    <strong>Cancel：取消执行业务</strong><br>​        取消执行业务，释放预留资源，需满足幂等性        </p>
-<h5 id="4、tcc-transaction-源码简单分析"><a href="#4、tcc-transaction-源码简单分析" class="headerlink" title="4、tcc-transaction 源码简单分析"></a>4、tcc-transaction 源码简单分析</h5><h6 id="a、Transaction对象的属性"><a href="#a、Transaction对象的属性" class="headerlink" title="a、Transaction对象的属性"></a>a、Transaction对象的属性</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556592153750.png" alt="1556592153750"></p>
+<h5 id="4、tcc-transaction-源码简单分析"><a href="#4、tcc-transaction-源码简单分析" class="headerlink" title="4、tcc-transaction 源码简单分析"></a>4、tcc-transaction 源码简单分析</h5><h6 id="a、Transaction对象的属性"><a href="#a、Transaction对象的属性" class="headerlink" title="a、Transaction对象的属性"></a>a、Transaction对象的属性</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556592153750.png" alt="1556592153750"></p>
 <table>
 <thead>
 <tr>
@@ -522,17 +521,17 @@
 <td>附加参数</td>
 </tr>
 </tbody></table>
-<h6 id="b、Transaction对象的两个重要方法"><a href="#b、Transaction对象的两个重要方法" class="headerlink" title="b、Transaction对象的两个重要方法"></a>b、Transaction对象的两个重要方法</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556593084224.png" alt="1556593084224"></p>
+<h6 id="b、Transaction对象的两个重要方法"><a href="#b、Transaction对象的两个重要方法" class="headerlink" title="b、Transaction对象的两个重要方法"></a>b、Transaction对象的两个重要方法</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556593084224.png" alt="1556593084224"></p>
 <p>执行Transaction对象的commit或rollback方法，会对应执行所有participant的commit或rollback方法</p>
-<h6 id="c、TransactionManager"><a href="#c、TransactionManager" class="headerlink" title="c、TransactionManager"></a>c、TransactionManager</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556593483540.png" alt="1556593483540"></p>
+<h6 id="c、TransactionManager"><a href="#c、TransactionManager" class="headerlink" title="c、TransactionManager"></a>c、TransactionManager</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556593483540.png" alt="1556593483540"></p>
 <p>TransactionManager用来控制Transaction的生命周期，Transaction的改变使用TransactionRepository同步到第三方存储，一般使用mysql数据库存储。</p>
-<h6 id="d、重试（补偿）机制的配置"><a href="#d、重试（补偿）机制的配置" class="headerlink" title="d、重试（补偿）机制的配置"></a>d、重试（补偿）机制的配置</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1557035993109.png" alt="1557035993109"></p>
+<h6 id="d、重试（补偿）机制的配置"><a href="#d、重试（补偿）机制的配置" class="headerlink" title="d、重试（补偿）机制的配置"></a>d、重试（补偿）机制的配置</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1557035993109.png" alt="1557035993109"></p>
 <p>基本思路：</p>
 <p>1.获取所有没被处理完的事务（具体表现为状态为confirming或cancelling）</p>
 <p>2.比较最大重试次数和分支事务最大可持续时间</p>
 <p>3.若confirming或cancelling成功则删除事务</p>
 <p>这里可以看一下tcc-transaction框架下TCC事务的执行流程</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1557035890392.png" alt="1557035890392"></p>
+<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1557035890392.png" alt="1557035890392"></p>
 <p>由此基本可以分析：TCC 事务框架都是要记录一些分布式事务的活动日志的，也就是事务记录，可以在磁盘上的日志文件里记录，也可以在数据库里记录。保存下来分布式事务运行的各个阶段和状态。</p>
 <h5 id="5、模式特点"><a href="#5、模式特点" class="headerlink" title="5、模式特点"></a>5、模式特点</h5><p>优点：</p>
 <ul>
@@ -552,7 +551,7 @@
 <p>GTS：全局事务服务。 TXC作为Aliyun中间件产品，2016年更换新名称GTS。</p>
 <p>FESCAR：2019年开源基于TXC / GTS的开源项目FESCAR，以便与社区密切合作，共同成长。</p>
 <p>Seata：简单的可扩展分布式事务架构。Ant Financial加入Fescar，使其成为一个更加开放的分布式事务社区，Fescar将重命名为Seata。</p>
-<h5 id="2、事务控制原理图-2"><a href="#2、事务控制原理图-2" class="headerlink" title="2、事务控制原理图"></a>2、事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556523369631.png" alt="1556523369631"></p>
+<h5 id="2、事务控制原理图-2"><a href="#2、事务控制原理图-2" class="headerlink" title="2、事务控制原理图"></a>2、事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556523369631.png" alt="1556523369631"></p>
 <h5 id="3、核心组件："><a href="#3、核心组件：" class="headerlink" title="3、核心组件："></a>3、核心组件：</h5><p>事务协调器（TC） ：事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚。<br>事务管理者（TM）：全局事务管理器，控制全局事务的边界，负责开启一个全局事务，并最终发起全局提交或全局回滚的决议<br>资源管理器（RM）：控制分支事务，负责分支注册、状态汇报，并接收事务协调器的指令，驱动分支（本地）事务的提交和回滚</p>
 <p>一个典型的分布式事务过程：</p>
 <ol>
@@ -564,7 +563,7 @@
 </ol>
 <h5 id="4、事务生命周期"><a href="#4、事务生命周期" class="headerlink" title="4、事务生命周期:"></a>4、事务生命周期:</h5><p><strong>（1）事务发起</strong>：</p>
 <p>​    1.构造一个全局事务，使用<code>@GlobalTransactional</code> 注解，由这个注解逻辑会进入到一个execute()方法中</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556617041724.png" alt="1556617041724"></p>
+<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556617041724.png" alt="1556617041724"></p>
 <p>​    2.开始事务</p>
 <p>​    通过 TmRpcClient 请求TC server端,注册一个全局的事物。得到一个全局事务id:XID,将这个XID设置到上下文中</p>
 <p>​    3.执行原始的业务代码</p>
@@ -572,17 +571,17 @@
 <p>​    4.参与者在收到feign请求时，首先会被SeataHandlerInterceptor拦截器拦截，拦截器会把请求中的XID设置到    本地的全局上下文中</p>
 <p><strong>（2）事务参与：</strong></p>
 <p>​    1.然后参与者(分支)就开始执行本地的业务。seata在这里做了大量的背后工作。为了能在jdbc连接中添加了自己的逻辑，seata重写了Statment之前的逻辑（代理）</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556617228588.png" alt="1556617228588"></p>
+<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556617228588.png" alt="1556617228588"></p>
 <p>​    2.注册分支事务到TC server端</p>
 <p>​    3.seata 的 JDBC 数据源代理通过对业务 SQL 的解析，把业务数据在更新前后的数据镜像组织成回滚日志，利    用本地事务的 ACID 特性，将业务数据的更新和回滚日志的写入在同一个本地事务中提交。这样可以保证任何提    交的业务数据的更新一定有相应的回滚日志存在。</p>
 <p>​    4.最后上报分支事务的状态（成功 or 失败）</p>
 <p>​    基于这样的机制，分支的本地事务便可以在全局事务的 Phase1 提交，马上释放本地事务锁定的资源。</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556615755289.png" alt="1556615755289"></p>
+<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556615755289.png" alt="1556615755289"></p>
 <p><strong>（3）事务提交或回滚</strong></p>
 <p>​    <strong>全局事务提交：</strong>当全局事务中所有分支事务全部完成并且都执行成功，这时TM会发起全局事务提交,TC收到全全局事务提交消息后，会通知各分支事务进行提交，此时分支事务此时已经完成提交，不需要同步协调处理（只需要异步清理回滚日志），Phase2 可以非常快速地完成。</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556618022071.png" alt="1556618022071"></p>
+<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556618022071.png" alt="1556618022071"></p>
 <p>​    <strong>全局事务回滚：</strong>当全局事务中所有分支事务全部完成并且某个分支事务失败了，TM会通知TC协调全局事务回滚，进而TC通知各分支事务进行回滚。RM 收到协调器发来的回滚请求，通过 XID 和 Branch ID 找到相应的回滚日志记录，通过回滚记录生成反向的更新 SQL 并执行，以完成分支的回滚。</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556618125969.png" alt="1556618125969"></p>
+<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556618125969.png" alt="1556618125969"></p>
 <h5 id="5、模式特点-1"><a href="#5、模式特点-1" class="headerlink" title="5、模式特点"></a>5、模式特点</h5><p>优点：</p>
 <ul>
 <li>​    业务入侵几乎为零，只需要简单的配置Seata的数据代理和加个注解<code>@GlobalTransactional</code>，加一个           undo_log表</li>
@@ -601,12 +600,12 @@
 <p>​    这里的使用的demo基于spring cloud+feign+spring jpa+spring cloud alibaba seata+mysql。</p>
 <p>​    具体可见：<a href="https://github.com/seata/seata-samples/tree/master/springcloud-jpa-seata" target="_blank" rel="noopener">springcloud-jpa-seata</a></p>
 <p>​    在实现demo时我遇到了一个错误，在官方提供的步骤里没提到，但有人在issues中提到了相同的错误。</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556529586191.png" alt="1556529586191"></p>
+<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556529586191.png" alt="1556529586191"></p>
 <p>​    解决办法：</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556529668557.png" alt="1556529668557"></p>
+<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556529668557.png" alt="1556529668557"></p>
 <hr>
 <h4 id="五、基于消息的最终一致性方案"><a href="#五、基于消息的最终一致性方案" class="headerlink" title="五、基于消息的最终一致性方案"></a>五、<strong>基于消息的最终一致性方案</strong></h4><h5 id="1、简介-1"><a href="#1、简介-1" class="headerlink" title="1、简介"></a>1、简介</h5><p>​    消息一致性方案是通过消息中间件保证上、下游应用数据操作的一致性。基本思路是将本地操作和发送消息放在一个事务中，保证本地操作和消息发送要么两者都成功或者都失败。下游应用向消息系统订阅该消息，收到消息后执行相应操作。</p>
-<h5 id="2、原理图-1"><a href="#2、原理图-1" class="headerlink" title="2、原理图"></a>2、原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/../../../Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556594556217.png" alt="1556594556217"></p>
+<h5 id="2、原理图-1"><a href="#2、原理图-1" class="headerlink" title="2、原理图"></a>2、原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556594556217.png" alt="1556594556217"></p>
 <p>消息方案从本质上讲是将分布式事务转换为两个本地事务，然后依靠下游业务的重试机制达到最终一致性。基于消息的最终一致性方案对应用侵入性也很高，应用需要进行大量业务改造，成本较高。</p>
 <h5 id="3、重试机制"><a href="#3、重试机制" class="headerlink" title="3、重试机制"></a>3、重试机制</h5><p>重试机制的基本思路：</p>
 <p>​    一是定时扫描本地消息表，把未完成的消息或者失败的消息重新发送一遍；</p>
