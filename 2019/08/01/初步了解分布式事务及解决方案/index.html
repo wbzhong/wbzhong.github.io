@@ -93,13 +93,36 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="分布式事务及解决方案 引言​    在说分布式事务之前，我们先从数据库事务说起。数据库事务有四大特性：原子性(Atomicity )、一致性( Consistency )、隔离性或独立性( Isolation)和持久性(Durabilily)，简称就是ACID，这里不多说。但有一个问题，数据库在提交事务的时候突然断电，它是怎样恢复的呢？一般情况下本地数据库都会包含日志文件和数据库文件，日志文件比数">
+<meta name="keywords" content="分布式事务,2PC,TCC,Seata,消息中间件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初步了解分布式事务及解决方案">
+<meta property="og:url" content="http://yoursite.com/2019/08/01/初步了解分布式事务及解决方案/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="分布式事务及解决方案 引言​    在说分布式事务之前，我们先从数据库事务说起。数据库事务有四大特性：原子性(Atomicity )、一致性( Consistency )、隔离性或独立性( Isolation)和持久性(Durabilily)，简称就是ACID，这里不多说。但有一个问题，数据库在提交事务的时候突然断电，它是怎样恢复的呢？一般情况下本地数据库都会包含日志文件和数据库文件，日志文件比数">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556589824562.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556180372396.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556589892129.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556592153750.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556593084224.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556593483540.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1557035993109.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1557035890392.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556523369631.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556617041724.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556617228588.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556615755289.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556618022071.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556618125969.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556529586191.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556529668557.png">
+<meta property="og:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556594556217.png">
+<meta property="og:updated_time" content="2019-08-01T02:51:18.670Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="初步了解分布式事务及解决方案">
+<meta name="twitter:description" content="分布式事务及解决方案 引言​    在说分布式事务之前，我们先从数据库事务说起。数据库事务有四大特性：原子性(Atomicity )、一致性( Consistency )、隔离性或独立性( Isolation)和持久性(Durabilily)，简称就是ACID，这里不多说。但有一个问题，数据库在提交事务的时候突然断电，它是怎样恢复的呢？一般情况下本地数据库都会包含日志文件和数据库文件，日志文件比数">
+<meta name="twitter:image" content="http://yoursite.com/2019/Users/zwb/Desktop/%E5%B7%9E%E5%8A%9B/assets/1556589824562.png">
 
 
 
@@ -107,7 +130,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/01/初步了解分布式事务及解决方案/">
 
 
 
@@ -118,7 +141,7 @@
 </script>
 
   
-  <title>Hexo</title>
+  <title>初步了解分布式事务及解决方案 | Hexo</title>
   
 
 
@@ -166,8 +189,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -205,7 +227,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -309,9 +331,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -343,10 +365,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/08/01/初步了解分布式事务及解决方案/" class="post-title-link" itemprop="url">初步了解分布式事务及解决方案</a>
+          <h1 class="post-title" itemprop="name headline">初步了解分布式事务及解决方案
+
               
             
           </h1>
@@ -430,9 +450,7 @@
       
 
       
-        
-          
-            <h3 id="分布式事务及解决方案"><a href="#分布式事务及解决方案" class="headerlink" title="分布式事务及解决方案"></a>分布式事务及解决方案</h3><hr>
+        <h3 id="分布式事务及解决方案"><a href="#分布式事务及解决方案" class="headerlink" title="分布式事务及解决方案"></a>分布式事务及解决方案</h3><hr>
 <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>​    在说分布式事务之前，我们先从数据库事务说起。数据库事务有四大特性：原子性(Atomicity )、一致性( Consistency )、隔离性或独立性( Isolation)和持久性(Durabilily)，简称就是ACID，这里不多说。但有一个问题，数据库在提交事务的时候突然断电，它是怎样恢复的呢？一般情况下本地数据库都会包含日志文件和数据库文件，日志文件比数据库文件大得多。数据库进行任何写入操作的时候都是要先写日志的，同样的道理，我们在执行事务的时候数据库首先会记录下这个事务的redo操作日志，然后才开始真正操作数据库，在操作之前首先会把日志文件写入磁盘，那么当突然断电的时候，即使操作没有完成，在重新启动数据库时候，数据库会根据当前数据的情况进行undo回滚或者是redo前滚，这样就保证了数据的强一致性。</p>
 <p>​    提出这个问题是因为分布式系统的核心就是处理各种异常情况，这也是分布式系统复杂的地方，因为分布式的网络环境很复杂，这种“断电”故障要比单机多很多，所以我们在做分布式系统的时候，最先考虑的就是这种情况。这些异常可能有 机器宕机、网络异常、存储数据丢失、其他异常等等…</p>
 <p>​    数据库的四大特性已经不能满足分布式事务，于是产生了一些新的理论。</p>
@@ -623,13 +641,13 @@
 <p>4、<a href="https://my.oschina.net/keking/blog/3011509" target="_blank" rel="noopener">Fescar分布式事务实现原理解析探秘</a></p>
 <p>5、<a href="https://github.com/seata/seata/wiki/概览" target="_blank" rel="noopener">Seata官方wiki</a></p>
 
-          
-        
       
     </div>
 
     
 
+    
+      
     
 
     
@@ -647,374 +665,47 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/25/docker搭建elk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhong wenbin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
         
+          
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/25/docker搭建elk/" class="post-title-link" itemprop="url">docker搭建elk</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
+        <div class="post-tags">
           
+            <a href="/tags/分布式事务/" rel="tag"># 分布式事务</a>
           
+            <a href="/tags/2PC/" rel="tag"># 2PC</a>
           
-
+            <a href="/tags/TCC/" rel="tag"># TCC</a>
           
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-25 16:11:53 / 修改时间：16:34:57" itemprop="dateCreated datePublished" datetime="2019-07-25T16:11:53+08:00">2019-07-25</time>
-            </span>
+            <a href="/tags/Seata/" rel="tag"># Seata</a>
           
-
+            <a href="/tags/消息中间件/" rel="tag"># 消息中间件</a>
           
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="Docker部署ELK"><a href="#Docker部署ELK" class="headerlink" title="Docker部署ELK"></a>Docker部署ELK</h4><h5 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h5><p>​    在开源的日志管理方案中，最出名的莫过于 ELK 了。ELK 是三个软件的合称：<strong>E</strong>lasticsearch、<strong>L</strong>ogstash、<strong>K</strong>ibana。Spring Cloud作为现在最热门的微服务架构，其分布式的日志输出如果使用传统方式来进行分析查看会非常麻烦，可以直接用ELK来为其日志提供友好的服务，而kafka作为现在大数据消息队列的标准可以作为Spring Cloud与ELK之间的桥梁。(本文暂不集成Kafka)</p>
-<h5 id="1、Elasticsearch"><a href="#1、Elasticsearch" class="headerlink" title="1、Elasticsearch"></a>1、Elasticsearch</h5><p>Elasticsearch是一个基于Lucene和Restful接口的分布式搜索擎，设计目标就是要能够处理和搜索巨量的日志数据。</p>
-<h5 id="2、Logstash"><a href="#2、Logstash" class="headerlink" title="2、Logstash"></a>2、Logstash</h5><p>读取原始日志，并对其进行分析和过滤，然后将其转发给其他组件（比如 Elasticsearch）进行索引或存储。Logstash 支持丰富的 Input 和 Output 类型，能够处理各种应用的日志。</p>
-<h5 id="3、Kibana"><a href="#3、Kibana" class="headerlink" title="3、Kibana"></a>3、Kibana</h5><p>Kibana是一个基于 JavaScript 的 Web 图形界面程序，专门用于可视化 Elasticsearch 的数据。Kibana 能够查询 Elasticsearch 并通过丰富的图表展示结果。用户可以创建 Dashboard 来监控系统的日志。</p>
-<h5 id="4、日志处理流程"><a href="#4、日志处理流程" class="headerlink" title="4、日志处理流程"></a>4、日志处理流程</h5><p>下图展示了 Docker 部署环境下典型的 ELK 日志处理流程：<img src="/2019/07/25/docker搭建elk/1557038911006.png" alt></p>
-<p>Logstash 负责从各个 Docker 容器中提取日志，Logstash将日志转发到 Elasticsearch 进行索引和保存，Kibana 分析和可视化数据。</p>
-<h5 id="二、实践流程"><a href="#二、实践流程" class="headerlink" title="二、实践流程"></a>二、实践流程</h5><p>ELK 的部署方案可以非常灵活，在规模较大的生产系统中，ELK 有自己的集群，实现了高可用和负载均衡。这里我们采用最小部署方案：在容器中搭建 ELK。</p>
-<h5 id="1、Docker安装"><a href="#1、Docker安装" class="headerlink" title="1、Docker安装"></a>1、Docker安装</h5><p>通过这个地址下载安装：<a href="https://store.docker.com/editions/community/docker-ce-desktop-windows" target="_blank" rel="noopener">docker下载地址</a></p>
-<p>安装完成后打开 Windows PowerShell，输入docker –version，如果正常输出docker版本就可以了</p>
-<h5 id="2、安装ELK套件"><a href="#2、安装ELK套件" class="headerlink" title="2、安装ELK套件"></a>2、安装ELK套件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk</span><br></pre></td></tr></table></figure>
-
-<p>我们使用的是 <code>sebp/elk</code> 这个现成的 image，里面已经包含了整个 ELK stack。容器启动后 ELK 各组件将分别监听如下端口：</p>
-<p>5601 - Kibana web 接口<br>9200 - Elasticsearch JSON 接口<br>5044 - Logstash 日志接收接口</p>
-<h5 id="3、访问Kibana"><a href="#3、访问Kibana" class="headerlink" title="3、访问Kibana"></a>3、访问Kibana</h5><p>查看效果：<a href="http://localhost:5601" target="_blank" rel="noopener">http://localhost:5601</a></p>
-<p><img src="/2019/07/25/docker搭建elk/1557039435082.png" alt></p>
-<p>当前 Kibana 没有可显示的数据，因为当前 Elasticsearch 还没有任何日志数据。</p>
-<h5 id="4、访问ElasticSearch"><a href="#4、访问ElasticSearch" class="headerlink" title="4、访问ElasticSearch"></a>4、访问ElasticSearch</h5><p>查看效果：<a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a></p>
-<p><img src="/2019/07/25/docker搭建elk/1557039569329.png" alt></p>
-<p>确实，目前 Elasticsearch 没有与日志相关的 <code>index</code>。</p>
-<h5 id="5、使用TCP的方式"><a href="#5、使用TCP的方式" class="headerlink" title="5、使用TCP的方式"></a>5、使用TCP的方式</h5><p>由于sebp/elk中logstash的input的方式默认是filebeat,首先们需要进入elk容器中修改input方式。logstash默认会将etc/logstash/conf.d/中的配置文件进行整合然后启动。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it elk /bin/bash 进入容器</span><br><span class="line"> </span><br><span class="line">cd etc/logstash/conf.d/</span><br><span class="line"> </span><br><span class="line">vim 02-beats-input.conf 修改input配置</span><br><span class="line"> </span><br><span class="line">input &#123;    </span><br><span class="line">    tcp &#123;         </span><br><span class="line">        port =&gt; 5044         </span><br><span class="line">        codec =&gt; json_lines     </span><br><span class="line">        </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125; </span><br><span class="line">output&#123;  </span><br><span class="line">    elasticsearch &#123; </span><br><span class="line">    hosts =&gt; [&quot;localhost:9200&quot;] </span><br><span class="line">    </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>保存文件退出，然后重启容器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart elk</span><br></pre></td></tr></table></figure>
-
-<h5 id="6、工程pom-xml文件添加依赖"><a href="#6、工程pom-xml文件添加依赖" class="headerlink" title="6、工程pom.xml文件添加依赖"></a>6、工程pom.xml文件添加依赖</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;net.logstash.logback&lt;/groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;logstash-logback-encoder&lt;/artifactId&gt;</span><br><span class="line">   &lt;version&gt;5.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="7、添加logback-spring-xml"><a href="#7、添加logback-spring-xml" class="headerlink" title="7、添加logback-spring.xml"></a>7、添加logback-spring.xml</h5><p>在工程<code>resources</code>目录下新增<code>logback-spring.xml</code>配置文件</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;!--该日志将日志级别不同的log信息保存到不同的文件中 --&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;include resource=<span class="string">"org/springframework/boot/logging/logback/defaults.xml"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;springProperty scope=<span class="string">"context"</span> name=<span class="string">"springAppName"</span></span><br><span class="line">                    source=<span class="string">"spring.application.name"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志在工程中的输出位置 --&gt;</span><br><span class="line">    &lt;property name=<span class="string">"LOG_FILE"</span> value=<span class="string">"$&#123;BUILD_FOLDER:-build&#125;/$&#123;springAppName&#125;"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 控制台的日志输出样式 --&gt;</span><br><span class="line">    &lt;property name=<span class="string">"CONSOLE_LOG_PATTERN"</span></span><br><span class="line">              value=<span class="string">"%clr(%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125;)&#123;faint&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;) %clr($&#123;PID:- &#125;)&#123;magenta&#125; %clr(---)&#123;faint&#125; %clr([%15.15t])&#123;faint&#125; %m%n$&#123;LOG_EXCEPTION_CONVERSION_WORD:-%wEx&#125;&#125;"</span> /&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- 控制台输出 --&gt;</span><br><span class="line">    &lt;appender name=<span class="string">"console"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span><br><span class="line">        &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"ch.qos.logback.classic.filter.ThresholdFilter"</span>&gt;</span><br><span class="line">            &lt;level&gt;INFO&lt;/level&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">        &lt;!-- 日志输出编码 --&gt;</span><br><span class="line">        &lt;encoder&gt;</span><br><span class="line">            &lt;pattern&gt;$&#123;CONSOLE_LOG_PATTERN&#125;&lt;/pattern&gt;</span><br><span class="line">            &lt;charset&gt;utf8&lt;/charset&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 为logstash输出的JSON格式的Appender --&gt;</span><br><span class="line">    &lt;appender name=<span class="string">"logstash"</span></span><br><span class="line">              <span class="class"><span class="keyword">class</span></span>=<span class="string">"net.logstash.logback.appender.LogstashTcpSocketAppender"</span>&gt;</span><br><span class="line">        &lt;destination&gt;127.0.0.1:5044&lt;/destination&gt;</span><br><span class="line">        &lt;!-- 日志输出编码 --&gt;</span><br><span class="line">        &lt;encoder</span><br><span class="line">                <span class="class"><span class="keyword">class</span></span>=<span class="string">"net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder"</span>&gt;</span><br><span class="line">            &lt;providers&gt;</span><br><span class="line">                &lt;timestamp&gt;</span><br><span class="line">                    &lt;timeZone&gt;UTC&lt;/timeZone&gt;</span><br><span class="line">                &lt;/timestamp&gt;</span><br><span class="line">                &lt;pattern&gt;</span><br><span class="line">                    &lt;pattern&gt;</span><br><span class="line">                        &#123;</span><br><span class="line">                        <span class="string">"severity"</span>: <span class="string">"%level"</span>,</span><br><span class="line">                        <span class="string">"service"</span>: <span class="string">"$&#123;springAppName:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"trace"</span>: <span class="string">"%X&#123;X-B3-TraceId:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"span"</span>: <span class="string">"%X&#123;X-B3-SpanId:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"exportable"</span>: <span class="string">"%X&#123;X-Span-Export:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"pid"</span>: <span class="string">"$&#123;PID:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"thread"</span>: <span class="string">"%thread"</span>,</span><br><span class="line">                        <span class="string">"class"</span>: <span class="string">"%logger&#123;40&#125;"</span>,</span><br><span class="line">                        <span class="string">"rest"</span>: <span class="string">"%message"</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &lt;/pattern&gt;</span><br><span class="line">                &lt;/pattern&gt;</span><br><span class="line">            &lt;/providers&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志输出级别 --&gt;</span><br><span class="line">    &lt;root level=<span class="string">"INFO"</span>&gt;</span><br><span class="line">        &lt;appender-ref ref=<span class="string">"console"</span> /&gt;</span><br><span class="line">        &lt;appender-ref ref=<span class="string">"logstash"</span> /&gt;</span><br><span class="line">    &lt;/root&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="8、启动项目工程"><a href="#8、启动项目工程" class="headerlink" title="8、启动项目工程"></a>8、启动项目工程</h5><p>日志就被发送到logstash中了。访问<a href="http://localhost:5601/" target="_blank" rel="noopener">http://localhost:5601/</a>可以进入kibana界面</p>
-<h5 id="9、配置Pattern"><a href="#9、配置Pattern" class="headerlink" title="9、配置Pattern"></a>9、配置Pattern</h5><p>配置pattern，输入*，匹配所有数据</p>
-<p>选择时间@timestamp，这样数据展示会以时间排序</p>
-<h5 id="10、查看日志"><a href="#10、查看日志" class="headerlink" title="10、查看日志"></a>10、查看日志</h5><p>点击discover，输入服务名称 <code>feign-consumer</code>即可查看相关日志</p>
-<p><img src="/2019/07/25/docker搭建elk/1557041279494.png" alt></p>
-<p>访问ElasticSearch <a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a> 也可查找到feign-consumer相关日志信息</p>
-<p><img src="/2019/07/25/docker搭建elk/1557041419125.png" alt></p>
-<p>11、整合filebeat</p>
-<p>docker run -d –name filebeat -v /etc/filebeat/filebeat.yml:/filebeat.yml  docker.elastic.co/beats/filebeat:7.0.1</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhong wenbin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/18/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-              
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-18 10:22:31" itemprop="dateCreated datePublished" datetime="2019-07-18T10:22:31+08:00">2019-07-18</time>
-            </span>
-          
-
-          
+              <a href="/2019/07/25/docker搭建elk/" rel="next" title="docker搭建elk">
+                <i class="fa fa-chevron-left"></i> docker搭建elk
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-07-25 16:16:45" itemprop="dateModified" datetime="2019-07-25T16:16:45+08:00">2019-07-25</time>
-              </span>
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -1024,14 +715,15 @@
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -1051,8 +743,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1138,6 +839,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式事务及解决方案"><span class="nav-number">1.</span> <span class="nav-text">分布式事务及解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、CAP定理"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、CAP定理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、BASE理论"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、BASE理论</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一、2PC（两阶段提交）"><span class="nav-number">1.2.</span> <span class="nav-text">一、2PC（两阶段提交）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、简介"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、原理图"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、原理图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.2.3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、特点"><span class="nav-number">1.2.4.</span> <span class="nav-text">3、特点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、TX-LCN事务模式"><span class="nav-number">1.3.</span> <span class="nav-text">二、TX-LCN事务模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、框架背景"><span class="nav-number">1.3.1.</span> <span class="nav-text">1、框架背景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、事务控制原理图"><span class="nav-number">1.3.2.</span> <span class="nav-text">2、事务控制原理图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、核心步骤"><span class="nav-number">1.3.3.</span> <span class="nav-text">3、核心步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、模式特点"><span class="nav-number">1.3.4.</span> <span class="nav-text">4、模式特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、使用示例"><span class="nav-number">1.3.5.</span> <span class="nav-text">5、使用示例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、TCC事务模式"><span class="nav-number">1.4.</span> <span class="nav-text">三、TCC事务模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、框架背景-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、框架背景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、事务控制原理图-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">2、事务控制原理图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、核心步骤-1"><span class="nav-number">1.4.3.</span> <span class="nav-text">3、核心步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、tcc-transaction-源码简单分析"><span class="nav-number">1.4.4.</span> <span class="nav-text">4、tcc-transaction 源码简单分析</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#a、Transaction对象的属性"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">a、Transaction对象的属性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#b、Transaction对象的两个重要方法"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">b、Transaction对象的两个重要方法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#c、TransactionManager"><span class="nav-number">1.4.4.3.</span> <span class="nav-text">c、TransactionManager</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#d、重试（补偿）机制的配置"><span class="nav-number">1.4.4.4.</span> <span class="nav-text">d、重试（补偿）机制的配置</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、模式特点"><span class="nav-number">1.4.5.</span> <span class="nav-text">5、模式特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、模式比较"><span class="nav-number">1.4.6.</span> <span class="nav-text">6、模式比较</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、Seata（Fescar）事务模式"><span class="nav-number">1.5.</span> <span class="nav-text">四、Seata（Fescar）事务模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、框架背景-2"><span class="nav-number">1.5.1.</span> <span class="nav-text">1、框架背景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、事务控制原理图-2"><span class="nav-number">1.5.2.</span> <span class="nav-text">2、事务控制原理图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、核心组件："><span class="nav-number">1.5.3.</span> <span class="nav-text">3、核心组件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、事务生命周期"><span class="nav-number">1.5.4.</span> <span class="nav-text">4、事务生命周期:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、模式特点-1"><span class="nav-number">1.5.5.</span> <span class="nav-text">5、模式特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、使用实例"><span class="nav-number">1.5.6.</span> <span class="nav-text">6、使用实例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、基于消息的最终一致性方案"><span class="nav-number">1.6.</span> <span class="nav-text">五、基于消息的最终一致性方案</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、简介-1"><span class="nav-number">1.6.1.</span> <span class="nav-text">1、简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、原理图-1"><span class="nav-number">1.6.2.</span> <span class="nav-text">2、原理图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、重试机制"><span class="nav-number">1.6.3.</span> <span class="nav-text">3、重试机制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、参考资料"><span class="nav-number">1.7.</span> <span class="nav-text">六、参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1256,6 +974,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   <script src="/js/next-boot.js?v=7.2.0"></script>
 
@@ -1269,6 +991,8 @@
 
   
 
+
+  
 
 
   
