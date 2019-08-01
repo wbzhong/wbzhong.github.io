@@ -371,7 +371,7 @@
                 
               
 
-              <time title="创建时间：2019-08-01 10:00:25 / 修改时间：13:50:58" itemprop="dateCreated datePublished" datetime="2019-08-01T10:00:25+08:00">2019-08-01</time>
+              <time title="创建时间：2019-08-01 10:00:25 / 修改时间：14:15:47" itemprop="dateCreated datePublished" datetime="2019-08-01T10:00:25+08:00">2019-08-01</time>
             </span>
           
 
@@ -435,31 +435,31 @@
             <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>​    在说分布式事务之前，我们先从数据库事务说起。数据库事务有四大特性：原子性(Atomicity )、一致性( Consistency )、隔离性或独立性( Isolation)和持久性(Durabilily)，简称就是ACID，这里不多说。但有一个问题，数据库在提交事务的时候突然断电，它是怎样恢复的呢？一般情况下本地数据库都会包含日志文件和数据库文件，日志文件比数据库文件大得多。数据库进行任何写入操作的时候都是要先写日志的，同样的道理，我们在执行事务的时候数据库首先会记录下这个事务的redo操作日志，然后才开始真正操作数据库，在操作之前首先会把日志文件写入磁盘，那么当突然断电的时候，即使操作没有完成，在重新启动数据库时候，数据库会根据当前数据的情况进行undo回滚或者是redo前滚，这样就保证了数据的强一致性。</p>
 <p>​    提出这个问题是因为分布式系统的核心就是处理各种异常情况，这也是分布式系统复杂的地方，因为分布式的网络环境很复杂，这种“断电”故障要比单机多很多，所以我们在做分布式系统的时候，最先考虑的就是这种情况。这些异常可能有 机器宕机、网络异常、存储数据丢失、其他异常等等…</p>
 <p>​    数据库的四大特性已经不能满足分布式事务，于是产生了一些新的理论。</p>
-<h5 id="1、CAP定理"><a href="#1、CAP定理" class="headerlink" title="1、CAP定理"></a>1、CAP定理</h5><p>​    CAP定理是由加州大学伯克利分校Eric Brewer教授提出来的，他指出在分布式系统中，WEB服务无法同时满足一下3个属性:</p>
+<h5 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h5><p>​    CAP定理是由加州大学伯克利分校Eric Brewer教授提出来的，他指出在分布式系统中，WEB服务无法同时满足一下3个属性:</p>
 <p>​    <strong>一致性(Consistency)</strong> ：对于数据分布在不同节点上的数据来说，如果在某个节点更新了数据，那么在其他节    点如果都能读取到这个最新的数据，那么就称为强一致，如果有某个节点没有读取到，那就是分布式不一致。</p>
 <p>​    <strong>可用性(Availability)</strong> ： 在集群中一部分节点故障后，集群整体是否还能响应客户端的读写请求。（对数据更新具备高可用性）</p>
 <p>​    <strong>分区容错性(Partition tolerance)</strong> ： 即使出现单个组件无法可用,操作依然可以完成</p>
 <p>​    具体地讲在分布式系统中，在任何数据库设计中，一个Web应用至多只能同时支持上面的两个属性。显然，任何横向扩展策略都要依赖于数据分区。因此，设计人员必须在一致性与可用性之间做出选择。(CP或AP)</p>
-<h5 id="2、BASE理论"><a href="#2、BASE理论" class="headerlink" title="2、BASE理论"></a>2、BASE理论</h5><p>​    BASE理论是用对CAP定理的进一步扩充，具体指的是：</p>
+<h5 id="BASE理论"><a href="#BASE理论" class="headerlink" title="BASE理论"></a>BASE理论</h5><p>​    BASE理论是用对CAP定理的进一步扩充，具体指的是：</p>
 <p>​    <strong>Basically Available（基本可用）</strong>：分布式系统在出现故障时，允许损失部分可用功能，保证核心功能可用。<br>​    <strong>Soft state（软状态）</strong>：允许系统中存在中间状态，这个状态不影响系统可用性，这里指的是 CAP 中的不一致。<br>​    <strong>Eventually consistent（最终一致性）</strong>：最终一致是指经过一段时间后，所有节点数据都将会达到一致。</p>
 <p>​    BASE理论是对CAP中的一致性和可用性进行一个权衡的结果，理论的核心思想就是：我们无法做到强一致，但每个应用都可以根据自身的业务特点，采用适当的方式来使系统达到最终一致性（Eventual consistency）。</p>
 <p>​    有了上述理论基础，我们来看一些常见的分布式事务解决方案。</p>
 <hr>
-<h4 id="一、2PC（两阶段提交）"><a href="#一、2PC（两阶段提交）" class="headerlink" title="一、2PC（两阶段提交）"></a>一、2PC（两阶段提交）</h4><h5 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h5><p>两阶段提交使用的就是数据库事务XA协议的原理。事务管理器要求每个涉及到事务的数据库预提交(precommit)此操作，并反映是否可以提交。事务协调器要求每个数据库提交数据，或者回滚数据。</p>
-<h5 id="2、原理图"><a href="#2、原理图" class="headerlink" title="2、原理图"></a>2、原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556589824562.png" alt="1556589824562"></p>
-<h5 id="3、特点"><a href="#3、特点" class="headerlink" title="3、特点"></a>3、特点</h5><p><strong>优点：</strong> 尽量保证了数据的强一致，适合对数据强一致要求很高的项目。（其实也不能100%保证强一致）</p>
+<h4 id="2PC（两阶段提交）"><a href="#2PC（两阶段提交）" class="headerlink" title="2PC（两阶段提交）"></a>2PC（两阶段提交）</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>两阶段提交使用的就是数据库事务XA协议的原理。事务管理器要求每个涉及到事务的数据库预提交(precommit)此操作，并反映是否可以提交。事务协调器要求每个数据库提交数据，或者回滚数据。</p>
+<h5 id="原理图"><a href="#原理图" class="headerlink" title="原理图"></a>原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556589824562.png" alt="1556589824562"></p>
+<h5 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h5><p><strong>优点：</strong> 尽量保证了数据的强一致，适合对数据强一致要求很高的项目。（其实也不能100%保证强一致）</p>
 <p><strong>缺点：</strong> 牺牲了可用性，对性能影响较大，不适合高并发高性能场景。</p>
 <hr>
-<h4 id="二、TX-LCN事务模式"><a href="#二、TX-LCN事务模式" class="headerlink" title="二、TX-LCN事务模式"></a>二、TX-LCN事务模式</h4><h5 id="1、框架背景"><a href="#1、框架背景" class="headerlink" title="1、框架背景"></a><strong>1、框架背景</strong></h5><p>​    LCN框架早期设计步骤为：锁定事务单元(lock)、确认事务模块状态(confirm)、通知事务(notify)，各取其首字母得名。框架从2017年6月份发布的1.0版本，到现在已经发展到了5.0.2版本。5.0以后由于框架兼容了LCN、TCC、TXC三种事务模式，改名为TX-LCN分布式事务框架。</p>
-<h5 id="2、事务控制原理图"><a href="#2、事务控制原理图" class="headerlink" title="2、事务控制原理图"></a>2、事务控制原理图</h5><p>​    TX-LCN由两大模块组成, TxClient、TxManager，TxClient作为模块的依赖框架，提供TX-LCN的标准支持，TxManager作为分布式事务的控制方。事务发起方或者参与方都由TxClient端来控制。</p>
+<h4 id="TX-LCN事务模式"><a href="#TX-LCN事务模式" class="headerlink" title="TX-LCN事务模式"></a>TX-LCN事务模式</h4><h5 id="框架背景"><a href="#框架背景" class="headerlink" title="框架背景"></a><strong>框架背景</strong></h5><p>​    LCN框架早期设计步骤为：锁定事务单元(lock)、确认事务模块状态(confirm)、通知事务(notify)，各取其首字母得名。框架从2017年6月份发布的1.0版本，到现在已经发展到了5.0.2版本。5.0以后由于框架兼容了LCN、TCC、TXC三种事务模式，改名为TX-LCN分布式事务框架。</p>
+<h5 id="事务控制原理图"><a href="#事务控制原理图" class="headerlink" title="事务控制原理图"></a>事务控制原理图</h5><p>​    TX-LCN由两大模块组成, TxClient、TxManager，TxClient作为模块的依赖框架，提供TX-LCN的标准支持，TxManager作为分布式事务的控制方。事务发起方或者参与方都由TxClient端来控制。</p>
 <p>原理图</p>
 <p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556180372396.png" alt="1556180372396"></p>
-<h5 id="3、核心步骤"><a href="#3、核心步骤" class="headerlink" title="3、核心步骤"></a>3、核心步骤</h5><ul>
+<h5 id="核心步骤"><a href="#核心步骤" class="headerlink" title="核心步骤"></a>核心步骤</h5><ul>
 <li>创建事务组<br>是指在事务发起方开始执行业务代码之前先调用TxManager创建事务组对象，然后拿到事务标示GroupId的过程。</li>
 <li>加入事务组<br>添加事务组是指参与方在执行完业务方法以后，将该模块的事务信息通知给TxManager的操作。</li>
 <li>通知事务组<br>是指在发起方执行完业务代码以后，将发起方执行结果状态通知给TxManager,TxManager将根据事务最终状态和事务组的信息来通知相应的参与模块提交或回滚事务，并返回结果给事务发起方。</li>
 </ul>
-<h5 id="4、模式特点"><a href="#4、模式特点" class="headerlink" title="4、模式特点"></a>4、模式特点</h5><p>优点：</p>
+<h5 id="模式特点"><a href="#模式特点" class="headerlink" title="模式特点"></a>模式特点</h5><p>优点：</p>
 <ul>
 <li>该模式对代码的嵌入性较低。</li>
 <li>该模式下的事务提交与回滚是由本地事务方控制，对于数据一致性上有较高的保障。</li>
@@ -470,14 +470,14 @@
 <li>需额外部署tx-manager服务节点（有可能出现因节点出问题而带来的问题）</li>
 <li>代理的连接需要随事务发起方一起释放连接，增加了连接占用的时间。</li>
 </ul>
-<h5 id="5、使用示例"><a href="#5、使用示例" class="headerlink" title="5、使用示例"></a>5、使用示例</h5><p>​    这里写了一个tx-lcn的简单demo，可在gitlab上查看或拉取下来自己尝试一下。</p>
+<h5 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h5><p>​    这里写了一个tx-lcn的简单demo，可在gitlab上查看或拉取下来自己尝试一下。</p>
 <p>​    项目地址：<a href="http://120.79.168.253:19088/gitlab/zoomlgd/starter/tree/development/txlcn-demo" target="_blank" rel="noopener">txlcn-demo</a></p>
 <hr>
-<h4 id="三、TCC事务模式"><a href="#三、TCC事务模式" class="headerlink" title="三、TCC事务模式"></a>三、TCC事务模式</h4><h5 id="1、框架背景-1"><a href="#1、框架背景-1" class="headerlink" title="1、框架背景"></a>1、框架背景</h5><p>​    在08年的软件开发2.0技术大会上，支付宝程立在PPT<a href="https://wenku.baidu.com/view/be946bec0975f46527d3e104.html" target="_blank" rel="noopener">大规模SOA系统中的分布事务处理</a>，提出TCC概念。目前很多分布式事务开源项目也都是基于TCC的思想实现。</p>
-<h5 id="2、事务控制原理图-1"><a href="#2、事务控制原理图-1" class="headerlink" title="2、事务控制原理图"></a>2、事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556589892129.png" alt="1556589892129"></p>
+<h4 id="TCC事务模式"><a href="#TCC事务模式" class="headerlink" title="TCC事务模式"></a>TCC事务模式</h4><h5 id="框架背景-1"><a href="#框架背景-1" class="headerlink" title="框架背景"></a>框架背景</h5><p>​    在08年的软件开发2.0技术大会上，支付宝程立在PPT<a href="https://wenku.baidu.com/view/be946bec0975f46527d3e104.html" target="_blank" rel="noopener">大规模SOA系统中的分布事务处理</a>，提出TCC概念。目前很多分布式事务开源项目也都是基于TCC的思想实现。</p>
+<h5 id="事务控制原理图-1"><a href="#事务控制原理图-1" class="headerlink" title="事务控制原理图"></a>事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556589892129.png" alt="1556589892129"></p>
 <p>​    事务开始时，业务应用会向事务协调器注册启动事务。之后业务应用会调用所有服务的try接口，完成一阶段准备。之后事务协调器会根据try接口返回情况，决定调用confirm接口或者cancel接口。如果接口调用失败，会进行重试。</p>
-<h5 id="3、核心步骤-1"><a href="#3、核心步骤-1" class="headerlink" title="3、核心步骤"></a>3、核心步骤</h5><p>​    TCC即为Try -Confirm -Cancel，它属于补偿型分布式事务。顾名思义，TCC实现分布式事务一共有三个步骤：    <strong>Try：尝试执行业务</strong><br>​        完成所有业务检查（一致性）<br>​        预留必须业务资源（准隔离性）<br>​    <strong>Confirm：执行业务</strong><br>​        执行任务，使用Try阶段预留的业务资源，需满足幂等性<br>​    <strong>Cancel：取消执行业务</strong><br>​        取消执行业务，释放预留资源，需满足幂等性        </p>
-<h5 id="4、tcc-transaction-源码简单分析"><a href="#4、tcc-transaction-源码简单分析" class="headerlink" title="4、tcc-transaction 源码简单分析"></a>4、tcc-transaction 源码简单分析</h5><h6 id="a、Transaction对象的属性"><a href="#a、Transaction对象的属性" class="headerlink" title="a、Transaction对象的属性"></a>a、Transaction对象的属性</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556592153750.png" alt="1556592153750"></p>
+<h5 id="核心步骤-1"><a href="#核心步骤-1" class="headerlink" title="核心步骤"></a>核心步骤</h5><p>​    TCC即为Try -Confirm -Cancel，它属于补偿型分布式事务。顾名思义，TCC实现分布式事务一共有三个步骤：    <strong>Try：尝试执行业务</strong><br>​        完成所有业务检查（一致性）<br>​        预留必须业务资源（准隔离性）<br>​    <strong>Confirm：执行业务</strong><br>​        执行任务，使用Try阶段预留的业务资源，需满足幂等性<br>​    <strong>Cancel：取消执行业务</strong><br>​        取消执行业务，释放预留资源，需满足幂等性        </p>
+<h5 id="tcc-transaction-源码简单分析"><a href="#tcc-transaction-源码简单分析" class="headerlink" title="tcc-transaction 源码简单分析"></a>tcc-transaction 源码简单分析</h5><h6 id="Transaction对象的属性"><a href="#Transaction对象的属性" class="headerlink" title="Transaction对象的属性"></a>Transaction对象的属性</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556592153750.png" alt="1556592153750"></p>
 <table>
 <thead>
 <tr>
@@ -522,11 +522,11 @@
 <td>附加参数</td>
 </tr>
 </tbody></table>
-<h6 id="b、Transaction对象的两个重要方法"><a href="#b、Transaction对象的两个重要方法" class="headerlink" title="b、Transaction对象的两个重要方法"></a>b、Transaction对象的两个重要方法</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556593084224.png" alt="1556593084224"></p>
+<h6 id="Transaction对象的两个重要方法"><a href="#Transaction对象的两个重要方法" class="headerlink" title="Transaction对象的两个重要方法"></a>Transaction对象的两个重要方法</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556593084224.png" alt="1556593084224"></p>
 <p>执行Transaction对象的commit或rollback方法，会对应执行所有participant的commit或rollback方法</p>
-<h6 id="c、TransactionManager"><a href="#c、TransactionManager" class="headerlink" title="c、TransactionManager"></a>c、TransactionManager</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556593483540.png" alt="1556593483540"></p>
+<h6 id="TransactionManager"><a href="#TransactionManager" class="headerlink" title="TransactionManager"></a>TransactionManager</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556593483540.png" alt="1556593483540"></p>
 <p>TransactionManager用来控制Transaction的生命周期，Transaction的改变使用TransactionRepository同步到第三方存储，一般使用mysql数据库存储。</p>
-<h6 id="d、重试（补偿）机制的配置"><a href="#d、重试（补偿）机制的配置" class="headerlink" title="d、重试（补偿）机制的配置"></a>d、重试（补偿）机制的配置</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1557035993109.png" alt="1557035993109"></p>
+<h6 id="重试（补偿）机制的配置"><a href="#重试（补偿）机制的配置" class="headerlink" title="重试（补偿）机制的配置"></a>重试（补偿）机制的配置</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1557035993109.png" alt="1557035993109"></p>
 <p>基本思路：</p>
 <p>1.获取所有没被处理完的事务（具体表现为状态为confirming或cancelling）</p>
 <p>2.比较最大重试次数和分支事务最大可持续时间</p>
@@ -534,7 +534,7 @@
 <p>这里可以看一下tcc-transaction框架下TCC事务的执行流程</p>
 <p><img src="/2019/08/01/初步了解分布式事务及解决方案/1557035890392.png" alt="1557035890392"></p>
 <p>由此基本可以分析：TCC 事务框架都是要记录一些分布式事务的活动日志的，也就是事务记录，可以在磁盘上的日志文件里记录，也可以在数据库里记录。保存下来分布式事务运行的各个阶段和状态。</p>
-<h5 id="5、模式特点"><a href="#5、模式特点" class="headerlink" title="5、模式特点"></a>5、模式特点</h5><p>优点：</p>
+<h5 id="模式特点-1"><a href="#模式特点-1" class="headerlink" title="模式特点"></a>模式特点</h5><p>优点：</p>
 <ul>
 <li>应用可自己定义数据库操作的粒度，不会锁定整个资源，使得降低锁冲突、提高吞吐量成为可能</li>
 </ul>
@@ -543,17 +543,17 @@
 <li>对应用的侵入性强。业务逻辑的每个分支都需要实现try、confirm、cancel三个操作，应用侵入性较强，改造成本高。</li>
 <li>实现难度较大。需要按照网络状态、系统故障等不同的失败原因实现不同的回滚策略。为了满足一致性的要求，confirm和cancel接口必须实现幂等。</li>
 </ul>
-<h5 id="6、模式比较"><a href="#6、模式比较" class="headerlink" title="6、模式比较"></a>6、模式比较</h5><p>​    TCC实际上把数据库层的二阶段提交上提到了应用层来实现，对于数据库来说是一阶段提交，规避了数据库层的    2PC性能低下问题。</p>
+<h5 id="模式比较"><a href="#模式比较" class="headerlink" title="模式比较"></a>模式比较</h5><p>​    TCC实际上把数据库层的二阶段提交上提到了应用层来实现，对于数据库来说是一阶段提交，规避了数据库层的    2PC性能低下问题。</p>
 <p>​    海信HICS团队对不使用消息中间件的分布式事务处理模式进行了压力测试，结果可作公司选型参考。</p>
 <p>​    它使用的是一个订单的业务场景。具体为：用户请求订单服务创建订单，订单服务作为事务发起者，发起分布式事务，订单服务分别请求库存服务与支付服务完成相应操作，从而完成一个分布式事务。</p>
 <p>具体可见：<a href="http://springcloud.cn/view/374" target="_blank" rel="noopener">Spring Cloud的分布式事务框架压测第一轮</a></p>
 <hr>
-<h4 id="四、Seata（Fescar）事务模式"><a href="#四、Seata（Fescar）事务模式" class="headerlink" title="四、Seata（Fescar）事务模式"></a>四、Seata（Fescar）事务模式</h4><h5 id="1、框架背景-2"><a href="#1、框架背景-2" class="headerlink" title="1、框架背景"></a>1、框架背景</h5><p>TXC：淘宝分布式事务组件。 阿里巴巴中间件团队自2014年启动该项目，以满足应用程序架构从单一服务变为微服务所导致的分布式事务问题。</p>
+<h4 id="Seata（Fescar）事务模式"><a href="#Seata（Fescar）事务模式" class="headerlink" title="Seata（Fescar）事务模式"></a>Seata（Fescar）事务模式</h4><h5 id="框架背景-2"><a href="#框架背景-2" class="headerlink" title="框架背景"></a>框架背景</h5><p>TXC：淘宝分布式事务组件。 阿里巴巴中间件团队自2014年启动该项目，以满足应用程序架构从单一服务变为微服务所导致的分布式事务问题。</p>
 <p>GTS：全局事务服务。 TXC作为Aliyun中间件产品，2016年更换新名称GTS。</p>
 <p>FESCAR：2019年开源基于TXC / GTS的开源项目FESCAR，以便与社区密切合作，共同成长。</p>
 <p>Seata：简单的可扩展分布式事务架构。Ant Financial加入Fescar，使其成为一个更加开放的分布式事务社区，Fescar将重命名为Seata。</p>
-<h5 id="2、事务控制原理图-2"><a href="#2、事务控制原理图-2" class="headerlink" title="2、事务控制原理图"></a>2、事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556523369631.png" alt="1556523369631"></p>
-<h5 id="3、核心组件："><a href="#3、核心组件：" class="headerlink" title="3、核心组件："></a>3、核心组件：</h5><p>事务协调器（TC） ：事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚。<br>事务管理者（TM）：全局事务管理器，控制全局事务的边界，负责开启一个全局事务，并最终发起全局提交或全局回滚的决议<br>资源管理器（RM）：控制分支事务，负责分支注册、状态汇报，并接收事务协调器的指令，驱动分支（本地）事务的提交和回滚</p>
+<h5 id="事务控制原理图-2"><a href="#事务控制原理图-2" class="headerlink" title="事务控制原理图"></a>事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556523369631.png" alt="1556523369631"></p>
+<h5 id="核心组件："><a href="#核心组件：" class="headerlink" title="核心组件："></a>核心组件：</h5><p>事务协调器（TC） ：事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚。<br>事务管理者（TM）：全局事务管理器，控制全局事务的边界，负责开启一个全局事务，并最终发起全局提交或全局回滚的决议<br>资源管理器（RM）：控制分支事务，负责分支注册、状态汇报，并接收事务协调器的指令，驱动分支（本地）事务的提交和回滚</p>
 <p>一个典型的分布式事务过程：</p>
 <ol>
 <li>TM 向 TC 申请开启一个全局事务，全局事务创建成功并生成一个全局唯一的 XID。</li>
@@ -562,7 +562,7 @@
 <li>TM 向 TC 发起针对 XID 的全局提交或回滚决议。</li>
 <li>TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。</li>
 </ol>
-<h5 id="4、事务生命周期"><a href="#4、事务生命周期" class="headerlink" title="4、事务生命周期:"></a>4、事务生命周期:</h5><p><strong>（1）事务发起</strong>：</p>
+<h5 id="事务生命周期"><a href="#事务生命周期" class="headerlink" title="事务生命周期:"></a>事务生命周期:</h5><p><strong>（1）事务发起</strong>：</p>
 <p>​    1.构造一个全局事务，使用<code>@GlobalTransactional</code> 注解，由这个注解逻辑会进入到一个execute()方法中</p>
 <p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556617041724.png" alt="1556617041724"></p>
 <p>​    2.开始事务</p>
@@ -583,7 +583,7 @@
 <p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556618022071.png" alt="1556618022071"></p>
 <p>​    <strong>全局事务回滚：</strong>当全局事务中所有分支事务全部完成并且某个分支事务失败了，TM会通知TC协调全局事务回滚，进而TC通知各分支事务进行回滚。RM 收到协调器发来的回滚请求，通过 XID 和 Branch ID 找到相应的回滚日志记录，通过回滚记录生成反向的更新 SQL 并执行，以完成分支的回滚。</p>
 <p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556618125969.png" alt="1556618125969"></p>
-<h5 id="5、模式特点-1"><a href="#5、模式特点-1" class="headerlink" title="5、模式特点"></a>5、模式特点</h5><p>优点：</p>
+<h5 id="模式特点-2"><a href="#模式特点-2" class="headerlink" title="模式特点"></a>模式特点</h5><p>优点：</p>
 <ul>
 <li>​    业务入侵几乎为零，只需要简单的配置Seata的数据代理和加个注解<code>@GlobalTransactional</code>，加一个           undo_log表</li>
 <li>​    正确的协调：通过后台定时任务各种正确的重试，并且未来会推出监控平台有可能可以手动回滚。</li>
@@ -597,7 +597,7 @@
 <li>​    在Seata的RoadMap里，Seata需要在<em>v1.0.0</em>才达到生产环境使用</li>
 </ul>
 <p>附上Seata Wiki(包含Seata的RoadMap)地址: <a href="https://github.com/seata/seata/wiki/概览" target="_blank" rel="noopener">概览</a></p>
-<h5 id="6、使用实例"><a href="#6、使用实例" class="headerlink" title="6、使用实例"></a>6、使用实例</h5><p>​    Seata开源项目上提供了多种集成的demo，很容易上手使用。</p>
+<h5 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h5><p>​    Seata开源项目上提供了多种集成的demo，很容易上手使用。</p>
 <p>​    这里的使用的demo基于spring cloud+feign+spring jpa+spring cloud alibaba seata+mysql。</p>
 <p>​    具体可见：<a href="https://github.com/seata/seata-samples/tree/master/springcloud-jpa-seata" target="_blank" rel="noopener">springcloud-jpa-seata</a></p>
 <p>​    在实现demo时我遇到了一个错误，在官方提供的步骤里没提到，但有人在issues中提到了相同的错误。</p>
@@ -605,10 +605,10 @@
 <p>​    解决办法：</p>
 <p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556529668557.png" alt="1556529668557"></p>
 <hr>
-<h4 id="五、基于消息的最终一致性方案"><a href="#五、基于消息的最终一致性方案" class="headerlink" title="五、基于消息的最终一致性方案"></a>五、<strong>基于消息的最终一致性方案</strong></h4><h5 id="1、简介-1"><a href="#1、简介-1" class="headerlink" title="1、简介"></a>1、简介</h5><p>​    消息一致性方案是通过消息中间件保证上、下游应用数据操作的一致性。基本思路是将本地操作和发送消息放在一个事务中，保证本地操作和消息发送要么两者都成功或者都失败。下游应用向消息系统订阅该消息，收到消息后执行相应操作。</p>
-<h5 id="2、原理图-1"><a href="#2、原理图-1" class="headerlink" title="2、原理图"></a>2、原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556594556217.png" alt="1556594556217"></p>
+<h4 id="基于消息的最终一致性方案"><a href="#基于消息的最终一致性方案" class="headerlink" title="基于消息的最终一致性方案"></a><strong>基于消息的最终一致性方案</strong></h4><h5 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h5><p>​    消息一致性方案是通过消息中间件保证上、下游应用数据操作的一致性。基本思路是将本地操作和发送消息放在一个事务中，保证本地操作和消息发送要么两者都成功或者都失败。下游应用向消息系统订阅该消息，收到消息后执行相应操作。</p>
+<h5 id="原理图-1"><a href="#原理图-1" class="headerlink" title="原理图"></a>原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556594556217.png" alt="1556594556217"></p>
 <p>消息方案从本质上讲是将分布式事务转换为两个本地事务，然后依靠下游业务的重试机制达到最终一致性。基于消息的最终一致性方案对应用侵入性也很高，应用需要进行大量业务改造，成本较高。</p>
-<h5 id="3、重试机制"><a href="#3、重试机制" class="headerlink" title="3、重试机制"></a>3、重试机制</h5><p>重试机制的基本思路：</p>
+<h5 id="重试机制"><a href="#重试机制" class="headerlink" title="重试机制"></a>重试机制</h5><p>重试机制的基本思路：</p>
 <p>​    一是定时扫描本地消息表，把未完成的消息或者失败的消息重新发送一遍；</p>
 <p>​    二是设定重试次数；</p>
 <p>​    三是保证操作的幂等性</p>
@@ -617,7 +617,7 @@
 <p>2、通过状态机处理，给业务数据设置状态，通过业务状态判断是否需要重复执行</p>
 <p>附上一篇讲的比较好的可靠消息最终一致性方案的文章：<a href="http://www.cnblogs.com/jajian/p/10014145.html" target="_blank" rel="noopener">可靠消息最终一致性方案的核心流程</a></p>
 <hr>
-<h4 id="六、参考资料"><a href="#六、参考资料" class="headerlink" title="六、参考资料"></a>六、参考资料</h4><p>1、 <a href="https://txlcn.org/zh-cn/index.html" target="_blank" rel="noopener">TX-LCN分布式事务框架官方文档</a></p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p>1、 <a href="https://txlcn.org/zh-cn/index.html" target="_blank" rel="noopener">TX-LCN分布式事务框架官方文档</a></p>
 <p>2、<a href="http://springcloud.cn/view/374" target="_blank" rel="noopener">Spring Cloud的分布式事务框架压测第一轮</a></p>
 <p>3、<a href="http://www.cnblogs.com/jajian/p/10014145.html" target="_blank" rel="noopener">终于有人把“TCC分布式事务”实现原理讲明白了</a></p>
 <p>4、<a href="https://my.oschina.net/keking/blog/3011509" target="_blank" rel="noopener">Fescar分布式事务实现原理解析探秘</a></p>
