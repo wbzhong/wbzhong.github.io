@@ -221,6 +221,22 @@
         
         
           
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-categories">
 
     
@@ -231,22 +247,6 @@
     
 
     <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
-
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
-
-    
-    
-      
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
 
   </li>
         
@@ -269,7 +269,7 @@
         
         
           
-          <li class="menu-item menu-item-tags">
+          <li class="menu-item menu-item-about">
 
     
     
@@ -278,7 +278,7 @@
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
 
   </li>
 
@@ -999,7 +999,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/07/25/docker搭建elk/" class="post-title-link" itemprop="url">docker搭建elk</a>
+                <a href="/2019/07/25/docker搭建elk/" class="post-title-link" itemprop="url">docker搭建ELK日志中心</a>
               
             
           </h1>
@@ -1024,195 +1024,7 @@
                 
               
 
-              <time title="创建时间：2019-07-25 16:11:53 / 修改时间：16:34:57" itemprop="dateCreated datePublished" datetime="2019-07-25T16:11:53+08:00">2019-07-25</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="Docker部署ELK"><a href="#Docker部署ELK" class="headerlink" title="Docker部署ELK"></a>Docker部署ELK</h4><h5 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h5><p>​    在开源的日志管理方案中，最出名的莫过于 ELK 了。ELK 是三个软件的合称：<strong>E</strong>lasticsearch、<strong>L</strong>ogstash、<strong>K</strong>ibana。Spring Cloud作为现在最热门的微服务架构，其分布式的日志输出如果使用传统方式来进行分析查看会非常麻烦，可以直接用ELK来为其日志提供友好的服务，而kafka作为现在大数据消息队列的标准可以作为Spring Cloud与ELK之间的桥梁。(本文暂不集成Kafka)</p>
-<h5 id="1、Elasticsearch"><a href="#1、Elasticsearch" class="headerlink" title="1、Elasticsearch"></a>1、Elasticsearch</h5><p>Elasticsearch是一个基于Lucene和Restful接口的分布式搜索擎，设计目标就是要能够处理和搜索巨量的日志数据。</p>
-<h5 id="2、Logstash"><a href="#2、Logstash" class="headerlink" title="2、Logstash"></a>2、Logstash</h5><p>读取原始日志，并对其进行分析和过滤，然后将其转发给其他组件（比如 Elasticsearch）进行索引或存储。Logstash 支持丰富的 Input 和 Output 类型，能够处理各种应用的日志。</p>
-<h5 id="3、Kibana"><a href="#3、Kibana" class="headerlink" title="3、Kibana"></a>3、Kibana</h5><p>Kibana是一个基于 JavaScript 的 Web 图形界面程序，专门用于可视化 Elasticsearch 的数据。Kibana 能够查询 Elasticsearch 并通过丰富的图表展示结果。用户可以创建 Dashboard 来监控系统的日志。</p>
-<h5 id="4、日志处理流程"><a href="#4、日志处理流程" class="headerlink" title="4、日志处理流程"></a>4、日志处理流程</h5><p>下图展示了 Docker 部署环境下典型的 ELK 日志处理流程：<img src="/2019/07/25/docker搭建elk/1557038911006.png" alt></p>
-<p>Logstash 负责从各个 Docker 容器中提取日志，Logstash将日志转发到 Elasticsearch 进行索引和保存，Kibana 分析和可视化数据。</p>
-<h5 id="二、实践流程"><a href="#二、实践流程" class="headerlink" title="二、实践流程"></a>二、实践流程</h5><p>ELK 的部署方案可以非常灵活，在规模较大的生产系统中，ELK 有自己的集群，实现了高可用和负载均衡。这里我们采用最小部署方案：在容器中搭建 ELK。</p>
-<h5 id="1、Docker安装"><a href="#1、Docker安装" class="headerlink" title="1、Docker安装"></a>1、Docker安装</h5><p>通过这个地址下载安装：<a href="https://store.docker.com/editions/community/docker-ce-desktop-windows" target="_blank" rel="noopener">docker下载地址</a></p>
-<p>安装完成后打开 Windows PowerShell，输入docker –version，如果正常输出docker版本就可以了</p>
-<h5 id="2、安装ELK套件"><a href="#2、安装ELK套件" class="headerlink" title="2、安装ELK套件"></a>2、安装ELK套件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk</span><br></pre></td></tr></table></figure>
-
-<p>我们使用的是 <code>sebp/elk</code> 这个现成的 image，里面已经包含了整个 ELK stack。容器启动后 ELK 各组件将分别监听如下端口：</p>
-<p>5601 - Kibana web 接口<br>9200 - Elasticsearch JSON 接口<br>5044 - Logstash 日志接收接口</p>
-<h5 id="3、访问Kibana"><a href="#3、访问Kibana" class="headerlink" title="3、访问Kibana"></a>3、访问Kibana</h5><p>查看效果：<a href="http://localhost:5601" target="_blank" rel="noopener">http://localhost:5601</a></p>
-<p><img src="/2019/07/25/docker搭建elk/1557039435082.png" alt></p>
-<p>当前 Kibana 没有可显示的数据，因为当前 Elasticsearch 还没有任何日志数据。</p>
-<h5 id="4、访问ElasticSearch"><a href="#4、访问ElasticSearch" class="headerlink" title="4、访问ElasticSearch"></a>4、访问ElasticSearch</h5><p>查看效果：<a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a></p>
-<p><img src="/2019/07/25/docker搭建elk/1557039569329.png" alt></p>
-<p>确实，目前 Elasticsearch 没有与日志相关的 <code>index</code>。</p>
-<h5 id="5、使用TCP的方式"><a href="#5、使用TCP的方式" class="headerlink" title="5、使用TCP的方式"></a>5、使用TCP的方式</h5><p>由于sebp/elk中logstash的input的方式默认是filebeat,首先们需要进入elk容器中修改input方式。logstash默认会将etc/logstash/conf.d/中的配置文件进行整合然后启动。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it elk /bin/bash 进入容器</span><br><span class="line"> </span><br><span class="line">cd etc/logstash/conf.d/</span><br><span class="line"> </span><br><span class="line">vim 02-beats-input.conf 修改input配置</span><br><span class="line"> </span><br><span class="line">input &#123;    </span><br><span class="line">    tcp &#123;         </span><br><span class="line">        port =&gt; 5044         </span><br><span class="line">        codec =&gt; json_lines     </span><br><span class="line">        </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125; </span><br><span class="line">output&#123;  </span><br><span class="line">    elasticsearch &#123; </span><br><span class="line">    hosts =&gt; [&quot;localhost:9200&quot;] </span><br><span class="line">    </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>保存文件退出，然后重启容器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart elk</span><br></pre></td></tr></table></figure>
-
-<h5 id="6、工程pom-xml文件添加依赖"><a href="#6、工程pom-xml文件添加依赖" class="headerlink" title="6、工程pom.xml文件添加依赖"></a>6、工程pom.xml文件添加依赖</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;net.logstash.logback&lt;/groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;logstash-logback-encoder&lt;/artifactId&gt;</span><br><span class="line">   &lt;version&gt;5.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="7、添加logback-spring-xml"><a href="#7、添加logback-spring-xml" class="headerlink" title="7、添加logback-spring.xml"></a>7、添加logback-spring.xml</h5><p>在工程<code>resources</code>目录下新增<code>logback-spring.xml</code>配置文件</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;!--该日志将日志级别不同的log信息保存到不同的文件中 --&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;include resource=<span class="string">"org/springframework/boot/logging/logback/defaults.xml"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;springProperty scope=<span class="string">"context"</span> name=<span class="string">"springAppName"</span></span><br><span class="line">                    source=<span class="string">"spring.application.name"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志在工程中的输出位置 --&gt;</span><br><span class="line">    &lt;property name=<span class="string">"LOG_FILE"</span> value=<span class="string">"$&#123;BUILD_FOLDER:-build&#125;/$&#123;springAppName&#125;"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 控制台的日志输出样式 --&gt;</span><br><span class="line">    &lt;property name=<span class="string">"CONSOLE_LOG_PATTERN"</span></span><br><span class="line">              value=<span class="string">"%clr(%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125;)&#123;faint&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;) %clr($&#123;PID:- &#125;)&#123;magenta&#125; %clr(---)&#123;faint&#125; %clr([%15.15t])&#123;faint&#125; %m%n$&#123;LOG_EXCEPTION_CONVERSION_WORD:-%wEx&#125;&#125;"</span> /&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- 控制台输出 --&gt;</span><br><span class="line">    &lt;appender name=<span class="string">"console"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span><br><span class="line">        &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"ch.qos.logback.classic.filter.ThresholdFilter"</span>&gt;</span><br><span class="line">            &lt;level&gt;INFO&lt;/level&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">        &lt;!-- 日志输出编码 --&gt;</span><br><span class="line">        &lt;encoder&gt;</span><br><span class="line">            &lt;pattern&gt;$&#123;CONSOLE_LOG_PATTERN&#125;&lt;/pattern&gt;</span><br><span class="line">            &lt;charset&gt;utf8&lt;/charset&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 为logstash输出的JSON格式的Appender --&gt;</span><br><span class="line">    &lt;appender name=<span class="string">"logstash"</span></span><br><span class="line">              <span class="class"><span class="keyword">class</span></span>=<span class="string">"net.logstash.logback.appender.LogstashTcpSocketAppender"</span>&gt;</span><br><span class="line">        &lt;destination&gt;127.0.0.1:5044&lt;/destination&gt;</span><br><span class="line">        &lt;!-- 日志输出编码 --&gt;</span><br><span class="line">        &lt;encoder</span><br><span class="line">                <span class="class"><span class="keyword">class</span></span>=<span class="string">"net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder"</span>&gt;</span><br><span class="line">            &lt;providers&gt;</span><br><span class="line">                &lt;timestamp&gt;</span><br><span class="line">                    &lt;timeZone&gt;UTC&lt;/timeZone&gt;</span><br><span class="line">                &lt;/timestamp&gt;</span><br><span class="line">                &lt;pattern&gt;</span><br><span class="line">                    &lt;pattern&gt;</span><br><span class="line">                        &#123;</span><br><span class="line">                        <span class="string">"severity"</span>: <span class="string">"%level"</span>,</span><br><span class="line">                        <span class="string">"service"</span>: <span class="string">"$&#123;springAppName:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"trace"</span>: <span class="string">"%X&#123;X-B3-TraceId:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"span"</span>: <span class="string">"%X&#123;X-B3-SpanId:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"exportable"</span>: <span class="string">"%X&#123;X-Span-Export:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"pid"</span>: <span class="string">"$&#123;PID:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"thread"</span>: <span class="string">"%thread"</span>,</span><br><span class="line">                        <span class="string">"class"</span>: <span class="string">"%logger&#123;40&#125;"</span>,</span><br><span class="line">                        <span class="string">"rest"</span>: <span class="string">"%message"</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &lt;/pattern&gt;</span><br><span class="line">                &lt;/pattern&gt;</span><br><span class="line">            &lt;/providers&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志输出级别 --&gt;</span><br><span class="line">    &lt;root level=<span class="string">"INFO"</span>&gt;</span><br><span class="line">        &lt;appender-ref ref=<span class="string">"console"</span> /&gt;</span><br><span class="line">        &lt;appender-ref ref=<span class="string">"logstash"</span> /&gt;</span><br><span class="line">    &lt;/root&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="8、启动项目工程"><a href="#8、启动项目工程" class="headerlink" title="8、启动项目工程"></a>8、启动项目工程</h5><p>日志就被发送到logstash中了。访问<a href="http://localhost:5601/" target="_blank" rel="noopener">http://localhost:5601/</a>可以进入kibana界面</p>
-<h5 id="9、配置Pattern"><a href="#9、配置Pattern" class="headerlink" title="9、配置Pattern"></a>9、配置Pattern</h5><p>配置pattern，输入*，匹配所有数据</p>
-<p>选择时间@timestamp，这样数据展示会以时间排序</p>
-<h5 id="10、查看日志"><a href="#10、查看日志" class="headerlink" title="10、查看日志"></a>10、查看日志</h5><p>点击discover，输入服务名称 <code>feign-consumer</code>即可查看相关日志</p>
-<p><img src="/2019/07/25/docker搭建elk/1557041279494.png" alt></p>
-<p>访问ElasticSearch <a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a> 也可查找到feign-consumer相关日志信息</p>
-<p><img src="/2019/07/25/docker搭建elk/1557041419125.png" alt></p>
-<p>11、整合filebeat</p>
-<p>docker run -d –name filebeat -v /etc/filebeat/filebeat.yml:/filebeat.yml  docker.elastic.co/beats/filebeat:7.0.1</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhong wenbin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/18/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-18 10:22:31" itemprop="dateCreated datePublished" datetime="2019-07-18T10:22:31+08:00">2019-07-18</time>
+              <time title="创建时间：2019-07-25 16:11:53" itemprop="dateCreated datePublished" datetime="2019-07-25T16:11:53+08:00">2019-07-25</time>
             </span>
           
 
@@ -1227,11 +1039,40 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-25 16:16:45" itemprop="dateModified" datetime="2019-07-25T16:16:45+08:00">2019-07-25</time>
+                <time title="修改时间：2019-08-01 16:14:14" itemprop="dateModified" datetime="2019-08-01T16:14:14+08:00">2019-08-01</time>
               </span>
             
           
 
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Elasticsearch/" itemprop="url" rel="index"><span itemprop="name">Elasticsearch</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Elasticsearch/ELK/" itemprop="url" rel="index"><span itemprop="name">ELK</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Elasticsearch/ELK/日志中心/" itemprop="url" rel="index"><span itemprop="name">日志中心</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1268,19 +1109,44 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+            <h5 id="ELK简介"><a href="#ELK简介" class="headerlink" title="ELK简介"></a>ELK简介</h5><p>​    在开源的日志管理方案中，最出名的莫过于 ELK 了。ELK 是三个软件的合称：<strong>E</strong>lasticsearch、<strong>L</strong>ogstash、<strong>K</strong>ibana。Spring Cloud作为现在最热门的微服务架构，其分布式的日志输出如果使用传统方式来进行分析查看会非常麻烦，可以直接用ELK来为其日志提供友好的服务，而kafka作为现在大数据消息队列的标准可以作为Spring Cloud与ELK之间的桥梁。(本文暂不集成Kafka)</p>
+<h5 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h5><p>Elasticsearch是一个基于Lucene和Restful接口的分布式搜索擎，设计目标就是要能够处理和搜索巨量的日志数据。</p>
+<h5 id="Logstash"><a href="#Logstash" class="headerlink" title="Logstash"></a>Logstash</h5><p>读取原始日志，并对其进行分析和过滤，然后将其转发给其他组件（比如 Elasticsearch）进行索引或存储。Logstash 支持丰富的 Input 和 Output 类型，能够处理各种应用的日志。</p>
+<h5 id="Kibana"><a href="#Kibana" class="headerlink" title="Kibana"></a>Kibana</h5><p>Kibana是一个基于 JavaScript 的 Web 图形界面程序，专门用于可视化 Elasticsearch 的数据。Kibana 能够查询 Elasticsearch 并通过丰富的图表展示结果。用户可以创建 Dashboard 来监控系统的日志。</p>
+<h5 id="日志处理流程"><a href="#日志处理流程" class="headerlink" title="日志处理流程"></a>日志处理流程</h5><p>下图展示了 Docker 部署环境下典型的 ELK 日志处理流程：<img src="/2019/07/25/docker搭建elk/1557038911006.png" alt></p>
+<p>Logstash 负责从各个 Docker 容器中提取日志，Logstash将日志转发到 Elasticsearch 进行索引和保存，Kibana 分析和可视化数据。</p>
+<h5 id="实践流程"><a href="#实践流程" class="headerlink" title="实践流程"></a>实践流程</h5><p>ELK 的部署方案可以非常灵活，在规模较大的生产系统中，ELK 有自己的集群，实现了高可用和负载均衡。这里我们采用最小部署方案：在容器中搭建 ELK。</p>
+<h5 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h5><p>通过这个地址下载安装：<a href="https://store.docker.com/editions/community/docker-ce-desktop-windows" target="_blank" rel="noopener">docker下载地址</a></p>
+<p>安装完成后打开 Windows PowerShell，输入docker –version，如果正常输出docker版本就可以了</p>
+<h5 id="安装ELK套件"><a href="#安装ELK套件" class="headerlink" title="安装ELK套件"></a>安装ELK套件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>我们使用的是 <code>sebp/elk</code> 这个现成的 image，里面已经包含了整个 ELK stack。容器启动后 ELK 各组件将分别监听如下端口：</p>
+<p>5601 - Kibana web 接口<br>9200 - Elasticsearch JSON 接口<br>5044 - Logstash 日志接收接口</p>
+<h5 id="访问Kibana"><a href="#访问Kibana" class="headerlink" title="访问Kibana"></a>访问Kibana</h5><p>查看效果：<a href="http://localhost:5601" target="_blank" rel="noopener">http://localhost:5601</a></p>
+<p><img src="/2019/07/25/docker搭建elk/1557039435082.png" alt></p>
+<p>当前 Kibana 没有可显示的数据，因为当前 Elasticsearch 还没有任何日志数据。</p>
+<h5 id="访问ElasticSearch"><a href="#访问ElasticSearch" class="headerlink" title="访问ElasticSearch"></a>访问ElasticSearch</h5><p>查看效果：<a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a></p>
+<p><img src="/2019/07/25/docker搭建elk/1557039569329.png" alt></p>
+<p>确实，目前 Elasticsearch 没有与日志相关的 <code>index</code>。</p>
+<h5 id="使用TCP的方式"><a href="#使用TCP的方式" class="headerlink" title="使用TCP的方式"></a>使用TCP的方式</h5><p>由于sebp/elk中logstash的input的方式默认是filebeat,首先们需要进入elk容器中修改input方式。logstash默认会将etc/logstash/conf.d/中的配置文件进行整合然后启动。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it elk /bin/bash 进入容器</span><br><span class="line"> </span><br><span class="line">cd etc/logstash/conf.d/</span><br><span class="line"> </span><br><span class="line">vim 02-beats-input.conf 修改input配置</span><br><span class="line"> </span><br><span class="line">input &#123;    </span><br><span class="line">    tcp &#123;         </span><br><span class="line">        port =&gt; 5044         </span><br><span class="line">        codec =&gt; json_lines     </span><br><span class="line">        </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125; </span><br><span class="line">output&#123;  </span><br><span class="line">    elasticsearch &#123; </span><br><span class="line">    hosts =&gt; [&quot;localhost:9200&quot;] </span><br><span class="line">    </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>保存文件退出，然后重启容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart elk</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h5 id="工程pom-xml文件添加依赖"><a href="#工程pom-xml文件添加依赖" class="headerlink" title="工程pom.xml文件添加依赖"></a>工程pom.xml文件添加依赖</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;net.logstash.logback&lt;/groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;logstash-logback-encoder&lt;/artifactId&gt;</span><br><span class="line">   &lt;version&gt;5.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h5 id="添加logback-spring-xml"><a href="#添加logback-spring-xml" class="headerlink" title="添加logback-spring.xml"></a>添加logback-spring.xml</h5><p>在工程<code>resources</code>目录下新增<code>logback-spring.xml</code>配置文件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;!--该日志将日志级别不同的log信息保存到不同的文件中 --&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;include resource=<span class="string">"org/springframework/boot/logging/logback/defaults.xml"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;springProperty scope=<span class="string">"context"</span> name=<span class="string">"springAppName"</span></span><br><span class="line">                    source=<span class="string">"spring.application.name"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志在工程中的输出位置 --&gt;</span><br><span class="line">    &lt;property name=<span class="string">"LOG_FILE"</span> value=<span class="string">"$&#123;BUILD_FOLDER:-build&#125;/$&#123;springAppName&#125;"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 控制台的日志输出样式 --&gt;</span><br><span class="line">    &lt;property name=<span class="string">"CONSOLE_LOG_PATTERN"</span></span><br><span class="line">              value=<span class="string">"%clr(%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125;)&#123;faint&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;) %clr($&#123;PID:- &#125;)&#123;magenta&#125; %clr(---)&#123;faint&#125; %clr([%15.15t])&#123;faint&#125; %m%n$&#123;LOG_EXCEPTION_CONVERSION_WORD:-%wEx&#125;&#125;"</span> /&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- 控制台输出 --&gt;</span><br><span class="line">    &lt;appender name=<span class="string">"console"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span><br><span class="line">        &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"ch.qos.logback.classic.filter.ThresholdFilter"</span>&gt;</span><br><span class="line">            &lt;level&gt;INFO&lt;/level&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">        &lt;!-- 日志输出编码 --&gt;</span><br><span class="line">        &lt;encoder&gt;</span><br><span class="line">            &lt;pattern&gt;$&#123;CONSOLE_LOG_PATTERN&#125;&lt;/pattern&gt;</span><br><span class="line">            &lt;charset&gt;utf8&lt;/charset&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 为logstash输出的JSON格式的Appender --&gt;</span><br><span class="line">    &lt;appender name=<span class="string">"logstash"</span></span><br><span class="line">              <span class="class"><span class="keyword">class</span></span>=<span class="string">"net.logstash.logback.appender.LogstashTcpSocketAppender"</span>&gt;</span><br><span class="line">        &lt;destination&gt;127.0.0.1:5044&lt;/destination&gt;</span><br><span class="line">        &lt;!-- 日志输出编码 --&gt;</span><br><span class="line">        &lt;encoder</span><br><span class="line">                <span class="class"><span class="keyword">class</span></span>=<span class="string">"net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder"</span>&gt;</span><br><span class="line">            &lt;providers&gt;</span><br><span class="line">                &lt;timestamp&gt;</span><br><span class="line">                    &lt;timeZone&gt;UTC&lt;/timeZone&gt;</span><br><span class="line">                &lt;/timestamp&gt;</span><br><span class="line">                &lt;pattern&gt;</span><br><span class="line">                    &lt;pattern&gt;</span><br><span class="line">                        &#123;</span><br><span class="line">                        <span class="string">"severity"</span>: <span class="string">"%level"</span>,</span><br><span class="line">                        <span class="string">"service"</span>: <span class="string">"$&#123;springAppName:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"trace"</span>: <span class="string">"%X&#123;X-B3-TraceId:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"span"</span>: <span class="string">"%X&#123;X-B3-SpanId:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"exportable"</span>: <span class="string">"%X&#123;X-Span-Export:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"pid"</span>: <span class="string">"$&#123;PID:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"thread"</span>: <span class="string">"%thread"</span>,</span><br><span class="line">                        <span class="string">"class"</span>: <span class="string">"%logger&#123;40&#125;"</span>,</span><br><span class="line">                        <span class="string">"rest"</span>: <span class="string">"%message"</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &lt;/pattern&gt;</span><br><span class="line">                &lt;/pattern&gt;</span><br><span class="line">            &lt;/providers&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志输出级别 --&gt;</span><br><span class="line">    &lt;root level=<span class="string">"INFO"</span>&gt;</span><br><span class="line">        &lt;appender-ref ref=<span class="string">"console"</span> /&gt;</span><br><span class="line">        &lt;appender-ref ref=<span class="string">"logstash"</span> /&gt;</span><br><span class="line">    &lt;/root&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="启动项目工程"><a href="#启动项目工程" class="headerlink" title="启动项目工程"></a>启动项目工程</h5><p>日志就被发送到logstash中了。访问<a href="http://localhost:5601/" target="_blank" rel="noopener">http://localhost:5601/</a>可以进入kibana界面</p>
+<h5 id="配置Pattern"><a href="#配置Pattern" class="headerlink" title="配置Pattern"></a>配置Pattern</h5><p>配置pattern，输入*，匹配所有数据</p>
+<p>选择时间@timestamp，这样数据展示会以时间排序</p>
+<h5 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h5><p>点击discover，输入服务名称 <code>feign-consumer</code>即可查看相关日志</p>
+<p><img src="/2019/07/25/docker搭建elk/1557041279494.png" alt></p>
+<p>访问ElasticSearch <a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a> 也可查找到feign-consumer相关日志信息</p>
+<p><img src="/2019/07/25/docker搭建elk/1557041419125.png" alt></p>
+<h5 id="整合filebeat"><a href="#整合filebeat" class="headerlink" title="整合filebeat"></a>整合filebeat</h5><p>docker run -d –name filebeat -v /etc/filebeat/filebeat.yml:/filebeat.yml  docker.elastic.co/beats/filebeat:7.0.1</p>
 
           
         
@@ -1367,7 +1233,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1388,7 +1254,11 @@
         
           
         
-        <span class="site-state-item-count">2</span>
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -1419,7 +1289,13 @@
         
           
         
-        <span class="site-state-item-count">7</span>
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
