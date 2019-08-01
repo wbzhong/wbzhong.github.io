@@ -93,13 +93,33 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="ES定义​    ES=elaticsearch简写， Elasticsearch是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。​    Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从">
+<meta name="keywords" content="Elasticsearch,数据检索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch数据检索分析及集群搭建实战">
+<meta property="og:url" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ES定义​    ES=elaticsearch简写， Elasticsearch是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。​    Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1557886330964.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1557890748887.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1557891599016.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1557892000881.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558331791515.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558332077042.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558157742471.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558159245334.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558160098068.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558160984408.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558162217825.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558162986957.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558165672394.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1558165720210.png">
+<meta property="og:updated_time" content="2019-08-01T08:01:01.964Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Elasticsearch数据检索分析及集群搭建实战">
+<meta name="twitter:description" content="ES定义​    ES=elaticsearch简写， Elasticsearch是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。​    Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/1557886330964.png">
 
 
 
@@ -107,7 +127,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/">
 
 
 
@@ -118,7 +138,7 @@
 </script>
 
   
-  <title>Hexo</title>
+  <title>Elasticsearch数据检索分析及集群搭建实战 | Hexo</title>
   
 
 
@@ -166,8 +186,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -205,7 +224,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -309,9 +328,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -343,10 +362,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/08/01/Elasticsearch数据检索分析及集群搭建实战/" class="post-title-link" itemprop="url">Elasticsearch数据检索分析及集群搭建实战</a>
+          <h1 class="post-title" itemprop="name headline">Elasticsearch数据检索分析及集群搭建实战
+
               
             
           </h1>
@@ -430,9 +447,7 @@
       
 
       
-        
-          
-            <h4 id="ES定义"><a href="#ES定义" class="headerlink" title="ES定义"></a>ES定义</h4><p>​    ES=elaticsearch简写， Elasticsearch是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。<br>​    Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
+        <h4 id="ES定义"><a href="#ES定义" class="headerlink" title="ES定义"></a>ES定义</h4><p>​    ES=elaticsearch简写， Elasticsearch是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。<br>​    Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
 <h4 id="Lucene与ES关系"><a href="#Lucene与ES关系" class="headerlink" title="Lucene与ES关系"></a>Lucene与ES关系</h4><p>1、Lucene只是一个库。想要使用它，必须使用Java来作为开发语言并将其直接集成到你的应用中。Lucene非常复杂，你需要深入了解检索的相关知识来理解它是如何工作的。</p>
 <p>2、Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单。</p>
 <h4 id="ES主要解决问题"><a href="#ES主要解决问题" class="headerlink" title="ES主要解决问题"></a>ES主要解决问题</h4><p>1、检索相关数据</p>
@@ -568,13 +583,13 @@
 <p>3、<a href="https://www.cnblogs.com/toov5/p/10296903.html" target="_blank" rel="noopener">ElasticSearch高可用集群环境搭建和分片原理</a></p>
 <p>4、[Elasticsearch: 权威指南](</p>
 
-          
-        
       
     </div>
 
     
 
+    
+      
     
 
     
@@ -592,556 +607,41 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/01/初步了解分布式事务及解决方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhong wenbin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
         
+          
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/08/01/初步了解分布式事务及解决方案/" class="post-title-link" itemprop="url">初步了解分布式事务及解决方案</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
+        <div class="post-tags">
           
+            <a href="/tags/Elasticsearch/" rel="tag"># Elasticsearch</a>
           
+            <a href="/tags/数据检索/" rel="tag"># 数据检索</a>
           
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-01 10:00:25 / 修改时间：14:15:47" itemprop="dateCreated datePublished" datetime="2019-08-01T10:00:25+08:00">2019-08-01</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/分布式/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>​    在说分布式事务之前，我们先从数据库事务说起。数据库事务有四大特性：原子性(Atomicity )、一致性( Consistency )、隔离性或独立性( Isolation)和持久性(Durabilily)，简称就是ACID，这里不多说。但有一个问题，数据库在提交事务的时候突然断电，它是怎样恢复的呢？一般情况下本地数据库都会包含日志文件和数据库文件，日志文件比数据库文件大得多。数据库进行任何写入操作的时候都是要先写日志的，同样的道理，我们在执行事务的时候数据库首先会记录下这个事务的redo操作日志，然后才开始真正操作数据库，在操作之前首先会把日志文件写入磁盘，那么当突然断电的时候，即使操作没有完成，在重新启动数据库时候，数据库会根据当前数据的情况进行undo回滚或者是redo前滚，这样就保证了数据的强一致性。</p>
-<p>​    提出这个问题是因为分布式系统的核心就是处理各种异常情况，这也是分布式系统复杂的地方，因为分布式的网络环境很复杂，这种“断电”故障要比单机多很多，所以我们在做分布式系统的时候，最先考虑的就是这种情况。这些异常可能有 机器宕机、网络异常、存储数据丢失、其他异常等等…</p>
-<p>​    数据库的四大特性已经不能满足分布式事务，于是产生了一些新的理论。</p>
-<h5 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h5><p>​    CAP定理是由加州大学伯克利分校Eric Brewer教授提出来的，他指出在分布式系统中，WEB服务无法同时满足一下3个属性:</p>
-<p>​    <strong>一致性(Consistency)</strong> ：对于数据分布在不同节点上的数据来说，如果在某个节点更新了数据，那么在其他节    点如果都能读取到这个最新的数据，那么就称为强一致，如果有某个节点没有读取到，那就是分布式不一致。</p>
-<p>​    <strong>可用性(Availability)</strong> ： 在集群中一部分节点故障后，集群整体是否还能响应客户端的读写请求。（对数据更新具备高可用性）</p>
-<p>​    <strong>分区容错性(Partition tolerance)</strong> ： 即使出现单个组件无法可用,操作依然可以完成</p>
-<p>​    具体地讲在分布式系统中，在任何数据库设计中，一个Web应用至多只能同时支持上面的两个属性。显然，任何横向扩展策略都要依赖于数据分区。因此，设计人员必须在一致性与可用性之间做出选择。(CP或AP)</p>
-<h5 id="BASE理论"><a href="#BASE理论" class="headerlink" title="BASE理论"></a>BASE理论</h5><p>​    BASE理论是用对CAP定理的进一步扩充，具体指的是：</p>
-<p>​    <strong>Basically Available（基本可用）</strong>：分布式系统在出现故障时，允许损失部分可用功能，保证核心功能可用。<br>​    <strong>Soft state（软状态）</strong>：允许系统中存在中间状态，这个状态不影响系统可用性，这里指的是 CAP 中的不一致。<br>​    <strong>Eventually consistent（最终一致性）</strong>：最终一致是指经过一段时间后，所有节点数据都将会达到一致。</p>
-<p>​    BASE理论是对CAP中的一致性和可用性进行一个权衡的结果，理论的核心思想就是：我们无法做到强一致，但每个应用都可以根据自身的业务特点，采用适当的方式来使系统达到最终一致性（Eventual consistency）。</p>
-<p>​    有了上述理论基础，我们来看一些常见的分布式事务解决方案。</p>
-<hr>
-<h4 id="2PC（两阶段提交）"><a href="#2PC（两阶段提交）" class="headerlink" title="2PC（两阶段提交）"></a>2PC（两阶段提交）</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>两阶段提交使用的就是数据库事务XA协议的原理。事务管理器要求每个涉及到事务的数据库预提交(precommit)此操作，并反映是否可以提交。事务协调器要求每个数据库提交数据，或者回滚数据。</p>
-<h5 id="原理图"><a href="#原理图" class="headerlink" title="原理图"></a>原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556589824562.png" alt="1556589824562"></p>
-<h5 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h5><p><strong>优点：</strong> 尽量保证了数据的强一致，适合对数据强一致要求很高的项目。（其实也不能100%保证强一致）</p>
-<p><strong>缺点：</strong> 牺牲了可用性，对性能影响较大，不适合高并发高性能场景。</p>
-<hr>
-<h4 id="TX-LCN事务模式"><a href="#TX-LCN事务模式" class="headerlink" title="TX-LCN事务模式"></a>TX-LCN事务模式</h4><h5 id="框架背景"><a href="#框架背景" class="headerlink" title="框架背景"></a><strong>框架背景</strong></h5><p>​    LCN框架早期设计步骤为：锁定事务单元(lock)、确认事务模块状态(confirm)、通知事务(notify)，各取其首字母得名。框架从2017年6月份发布的1.0版本，到现在已经发展到了5.0.2版本。5.0以后由于框架兼容了LCN、TCC、TXC三种事务模式，改名为TX-LCN分布式事务框架。</p>
-<h5 id="事务控制原理图"><a href="#事务控制原理图" class="headerlink" title="事务控制原理图"></a>事务控制原理图</h5><p>​    TX-LCN由两大模块组成, TxClient、TxManager，TxClient作为模块的依赖框架，提供TX-LCN的标准支持，TxManager作为分布式事务的控制方。事务发起方或者参与方都由TxClient端来控制。</p>
-<p>原理图</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556180372396.png" alt="1556180372396"></p>
-<h5 id="核心步骤"><a href="#核心步骤" class="headerlink" title="核心步骤"></a>核心步骤</h5><ul>
-<li>创建事务组<br>是指在事务发起方开始执行业务代码之前先调用TxManager创建事务组对象，然后拿到事务标示GroupId的过程。</li>
-<li>加入事务组<br>添加事务组是指参与方在执行完业务方法以后，将该模块的事务信息通知给TxManager的操作。</li>
-<li>通知事务组<br>是指在发起方执行完业务代码以后，将发起方执行结果状态通知给TxManager,TxManager将根据事务最终状态和事务组的信息来通知相应的参与模块提交或回滚事务，并返回结果给事务发起方。</li>
-</ul>
-<h5 id="模式特点"><a href="#模式特点" class="headerlink" title="模式特点"></a>模式特点</h5><p>优点：</p>
-<ul>
-<li>该模式对代码的嵌入性较低。</li>
-<li>该模式下的事务提交与回滚是由本地事务方控制，对于数据一致性上有较高的保障。</li>
-<li>支持了TXC和TCC模式，可结合使用</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>需额外部署tx-manager服务节点（有可能出现因节点出问题而带来的问题）</li>
-<li>代理的连接需要随事务发起方一起释放连接，增加了连接占用的时间。</li>
-</ul>
-<h5 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h5><p>​    这里写了一个tx-lcn的简单demo，可在gitlab上查看或拉取下来自己尝试一下。</p>
-<p>​    项目地址：<a href="http://120.79.168.253:19088/gitlab/zoomlgd/starter/tree/development/txlcn-demo" target="_blank" rel="noopener">txlcn-demo</a></p>
-<hr>
-<h4 id="TCC事务模式"><a href="#TCC事务模式" class="headerlink" title="TCC事务模式"></a>TCC事务模式</h4><h5 id="框架背景-1"><a href="#框架背景-1" class="headerlink" title="框架背景"></a>框架背景</h5><p>​    在08年的软件开发2.0技术大会上，支付宝程立在PPT<a href="https://wenku.baidu.com/view/be946bec0975f46527d3e104.html" target="_blank" rel="noopener">大规模SOA系统中的分布事务处理</a>，提出TCC概念。目前很多分布式事务开源项目也都是基于TCC的思想实现。</p>
-<h5 id="事务控制原理图-1"><a href="#事务控制原理图-1" class="headerlink" title="事务控制原理图"></a>事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556589892129.png" alt="1556589892129"></p>
-<p>​    事务开始时，业务应用会向事务协调器注册启动事务。之后业务应用会调用所有服务的try接口，完成一阶段准备。之后事务协调器会根据try接口返回情况，决定调用confirm接口或者cancel接口。如果接口调用失败，会进行重试。</p>
-<h5 id="核心步骤-1"><a href="#核心步骤-1" class="headerlink" title="核心步骤"></a>核心步骤</h5><p>​    TCC即为Try -Confirm -Cancel，它属于补偿型分布式事务。顾名思义，TCC实现分布式事务一共有三个步骤：    <strong>Try：尝试执行业务</strong><br>​        完成所有业务检查（一致性）<br>​        预留必须业务资源（准隔离性）<br>​    <strong>Confirm：执行业务</strong><br>​        执行任务，使用Try阶段预留的业务资源，需满足幂等性<br>​    <strong>Cancel：取消执行业务</strong><br>​        取消执行业务，释放预留资源，需满足幂等性        </p>
-<h5 id="tcc-transaction-源码简单分析"><a href="#tcc-transaction-源码简单分析" class="headerlink" title="tcc-transaction 源码简单分析"></a>tcc-transaction 源码简单分析</h5><h6 id="Transaction对象的属性"><a href="#Transaction对象的属性" class="headerlink" title="Transaction对象的属性"></a>Transaction对象的属性</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556592153750.png" alt="1556592153750"></p>
-<table>
-<thead>
-<tr>
-<th align="left">属性</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">xid</td>
-<td>全局事务id</td>
-</tr>
-<tr>
-<td align="left">status</td>
-<td>事务状态：trying,confirming,canceling</td>
-</tr>
-<tr>
-<td align="left">transactionType</td>
-<td>Root(根事务),Branch(分支事务)；事务发起方法对应主事务Root</td>
-</tr>
-<tr>
-<td align="left">retriedCount</td>
-<td>事务重试次数，当confirm或者cancel失败重试时增加</td>
-</tr>
-<tr>
-<td align="left">createTime</td>
-<td>事务创建时间</td>
-</tr>
-<tr>
-<td align="left">lastUpdateTime</td>
-<td>事务最后更新时间</td>
-</tr>
-<tr>
-<td align="left">version</td>
-<td>事务版本</td>
-</tr>
-<tr>
-<td align="left">participants</td>
-<td>事务参与者</td>
-</tr>
-<tr>
-<td align="left">attachments</td>
-<td>附加参数</td>
-</tr>
-</tbody></table>
-<h6 id="Transaction对象的两个重要方法"><a href="#Transaction对象的两个重要方法" class="headerlink" title="Transaction对象的两个重要方法"></a>Transaction对象的两个重要方法</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556593084224.png" alt="1556593084224"></p>
-<p>执行Transaction对象的commit或rollback方法，会对应执行所有participant的commit或rollback方法</p>
-<h6 id="TransactionManager"><a href="#TransactionManager" class="headerlink" title="TransactionManager"></a>TransactionManager</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556593483540.png" alt="1556593483540"></p>
-<p>TransactionManager用来控制Transaction的生命周期，Transaction的改变使用TransactionRepository同步到第三方存储，一般使用mysql数据库存储。</p>
-<h6 id="重试（补偿）机制的配置"><a href="#重试（补偿）机制的配置" class="headerlink" title="重试（补偿）机制的配置"></a>重试（补偿）机制的配置</h6><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1557035993109.png" alt="1557035993109"></p>
-<p>基本思路：</p>
-<p>1.获取所有没被处理完的事务（具体表现为状态为confirming或cancelling）</p>
-<p>2.比较最大重试次数和分支事务最大可持续时间</p>
-<p>3.若confirming或cancelling成功则删除事务</p>
-<p>这里可以看一下tcc-transaction框架下TCC事务的执行流程</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1557035890392.png" alt="1557035890392"></p>
-<p>由此基本可以分析：TCC 事务框架都是要记录一些分布式事务的活动日志的，也就是事务记录，可以在磁盘上的日志文件里记录，也可以在数据库里记录。保存下来分布式事务运行的各个阶段和状态。</p>
-<h5 id="模式特点-1"><a href="#模式特点-1" class="headerlink" title="模式特点"></a>模式特点</h5><p>优点：</p>
-<ul>
-<li>应用可自己定义数据库操作的粒度，不会锁定整个资源，使得降低锁冲突、提高吞吐量成为可能</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>对应用的侵入性强。业务逻辑的每个分支都需要实现try、confirm、cancel三个操作，应用侵入性较强，改造成本高。</li>
-<li>实现难度较大。需要按照网络状态、系统故障等不同的失败原因实现不同的回滚策略。为了满足一致性的要求，confirm和cancel接口必须实现幂等。</li>
-</ul>
-<h5 id="模式比较"><a href="#模式比较" class="headerlink" title="模式比较"></a>模式比较</h5><p>​    TCC实际上把数据库层的二阶段提交上提到了应用层来实现，对于数据库来说是一阶段提交，规避了数据库层的    2PC性能低下问题。</p>
-<p>​    海信HICS团队对不使用消息中间件的分布式事务处理模式进行了压力测试，结果可作公司选型参考。</p>
-<p>​    它使用的是一个订单的业务场景。具体为：用户请求订单服务创建订单，订单服务作为事务发起者，发起分布式事务，订单服务分别请求库存服务与支付服务完成相应操作，从而完成一个分布式事务。</p>
-<p>具体可见：<a href="http://springcloud.cn/view/374" target="_blank" rel="noopener">Spring Cloud的分布式事务框架压测第一轮</a></p>
-<hr>
-<h4 id="Seata（Fescar）事务模式"><a href="#Seata（Fescar）事务模式" class="headerlink" title="Seata（Fescar）事务模式"></a>Seata（Fescar）事务模式</h4><h5 id="框架背景-2"><a href="#框架背景-2" class="headerlink" title="框架背景"></a>框架背景</h5><p>TXC：淘宝分布式事务组件。 阿里巴巴中间件团队自2014年启动该项目，以满足应用程序架构从单一服务变为微服务所导致的分布式事务问题。</p>
-<p>GTS：全局事务服务。 TXC作为Aliyun中间件产品，2016年更换新名称GTS。</p>
-<p>FESCAR：2019年开源基于TXC / GTS的开源项目FESCAR，以便与社区密切合作，共同成长。</p>
-<p>Seata：简单的可扩展分布式事务架构。Ant Financial加入Fescar，使其成为一个更加开放的分布式事务社区，Fescar将重命名为Seata。</p>
-<h5 id="事务控制原理图-2"><a href="#事务控制原理图-2" class="headerlink" title="事务控制原理图"></a>事务控制原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556523369631.png" alt="1556523369631"></p>
-<h5 id="核心组件："><a href="#核心组件：" class="headerlink" title="核心组件："></a>核心组件：</h5><p>事务协调器（TC） ：事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚。<br>事务管理者（TM）：全局事务管理器，控制全局事务的边界，负责开启一个全局事务，并最终发起全局提交或全局回滚的决议<br>资源管理器（RM）：控制分支事务，负责分支注册、状态汇报，并接收事务协调器的指令，驱动分支（本地）事务的提交和回滚</p>
-<p>一个典型的分布式事务过程：</p>
-<ol>
-<li>TM 向 TC 申请开启一个全局事务，全局事务创建成功并生成一个全局唯一的 XID。</li>
-<li>XID 在微服务调用链路的上下文中传播。</li>
-<li>RM 向 TC 注册分支事务，将其纳入 XID 对应全局事务的管辖。</li>
-<li>TM 向 TC 发起针对 XID 的全局提交或回滚决议。</li>
-<li>TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。</li>
-</ol>
-<h5 id="事务生命周期"><a href="#事务生命周期" class="headerlink" title="事务生命周期:"></a>事务生命周期:</h5><p><strong>（1）事务发起</strong>：</p>
-<p>​    1.构造一个全局事务，使用<code>@GlobalTransactional</code> 注解，由这个注解逻辑会进入到一个execute()方法中</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556617041724.png" alt="1556617041724"></p>
-<p>​    2.开始事务</p>
-<p>​    通过 TmRpcClient 请求TC server端,注册一个全局的事物。得到一个全局事务id:XID,将这个XID设置到上下文中</p>
-<p>​    3.执行原始的业务代码</p>
-<p>​    在springcloud中我们用feign去请求其他服务，seata对feign进行了重写，在SeataFeignClient中seata对每个     feign的请求都会做一次判断，如果在全局上下文中含有事务id，feign的请求头会带上XID</p>
-<p>​    4.参与者在收到feign请求时，首先会被SeataHandlerInterceptor拦截器拦截，拦截器会把请求中的XID设置到    本地的全局上下文中</p>
-<p><strong>（2）事务参与：</strong></p>
-<p>​    1.然后参与者(分支)就开始执行本地的业务。seata在这里做了大量的背后工作。为了能在jdbc连接中添加了自己的逻辑，seata重写了Statment之前的逻辑（代理）</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556617228588.png" alt="1556617228588"></p>
-<p>​    2.注册分支事务到TC server端</p>
-<p>​    3.seata 的 JDBC 数据源代理通过对业务 SQL 的解析，把业务数据在更新前后的数据镜像组织成回滚日志，利    用本地事务的 ACID 特性，将业务数据的更新和回滚日志的写入在同一个本地事务中提交。这样可以保证任何提    交的业务数据的更新一定有相应的回滚日志存在。</p>
-<p>​    4.最后上报分支事务的状态（成功 or 失败）</p>
-<p>​    基于这样的机制，分支的本地事务便可以在全局事务的 Phase1 提交，马上释放本地事务锁定的资源。</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556615755289.png" alt="1556615755289"></p>
-<p><strong>（3）事务提交或回滚</strong></p>
-<p>​    <strong>全局事务提交：</strong>当全局事务中所有分支事务全部完成并且都执行成功，这时TM会发起全局事务提交,TC收到全全局事务提交消息后，会通知各分支事务进行提交，此时分支事务此时已经完成提交，不需要同步协调处理（只需要异步清理回滚日志），Phase2 可以非常快速地完成。</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556618022071.png" alt="1556618022071"></p>
-<p>​    <strong>全局事务回滚：</strong>当全局事务中所有分支事务全部完成并且某个分支事务失败了，TM会通知TC协调全局事务回滚，进而TC通知各分支事务进行回滚。RM 收到协调器发来的回滚请求，通过 XID 和 Branch ID 找到相应的回滚日志记录，通过回滚记录生成反向的更新 SQL 并执行，以完成分支的回滚。</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556618125969.png" alt="1556618125969"></p>
-<h5 id="模式特点-2"><a href="#模式特点-2" class="headerlink" title="模式特点"></a>模式特点</h5><p>优点：</p>
-<ul>
-<li>​    业务入侵几乎为零，只需要简单的配置Seata的数据代理和加个注解<code>@GlobalTransactional</code>，加一个           undo_log表</li>
-<li>​    正确的协调：通过后台定时任务各种正确的重试，并且未来会推出监控平台有可能可以手动回滚。</li>
-<li>​    高可用: 通过 HA-Cluster 保证高可用（2019年5月，Seata 将加入服务端 HA 集群支持）。</li>
-<li>​    高性能：文件顺序写，RPC 通过 netty 实现，Seata 未来可以水平扩展，提高处理性能。</li>
-<li>​    高扩展性：提供给用户可以自由实现的地方，比如配置，服务发现和注册，全局锁等等。</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>​    需额外启动一个TC服务端来推动全局事务提交或回滚。</li>
-<li>​    在Seata的RoadMap里，Seata需要在<em>v1.0.0</em>才达到生产环境使用</li>
-</ul>
-<p>附上Seata Wiki(包含Seata的RoadMap)地址: <a href="https://github.com/seata/seata/wiki/概览" target="_blank" rel="noopener">概览</a></p>
-<h5 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h5><p>​    Seata开源项目上提供了多种集成的demo，很容易上手使用。</p>
-<p>​    这里的使用的demo基于spring cloud+feign+spring jpa+spring cloud alibaba seata+mysql。</p>
-<p>​    具体可见：<a href="https://github.com/seata/seata-samples/tree/master/springcloud-jpa-seata" target="_blank" rel="noopener">springcloud-jpa-seata</a></p>
-<p>​    在实现demo时我遇到了一个错误，在官方提供的步骤里没提到，但有人在issues中提到了相同的错误。</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556529586191.png" alt="1556529586191"></p>
-<p>​    解决办法：</p>
-<p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556529668557.png" alt="1556529668557"></p>
-<hr>
-<h4 id="基于消息的最终一致性方案"><a href="#基于消息的最终一致性方案" class="headerlink" title="基于消息的最终一致性方案"></a><strong>基于消息的最终一致性方案</strong></h4><h5 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h5><p>​    消息一致性方案是通过消息中间件保证上、下游应用数据操作的一致性。基本思路是将本地操作和发送消息放在一个事务中，保证本地操作和消息发送要么两者都成功或者都失败。下游应用向消息系统订阅该消息，收到消息后执行相应操作。</p>
-<h5 id="原理图-1"><a href="#原理图-1" class="headerlink" title="原理图"></a>原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556594556217.png" alt="1556594556217"></p>
-<p>消息方案从本质上讲是将分布式事务转换为两个本地事务，然后依靠下游业务的重试机制达到最终一致性。基于消息的最终一致性方案对应用侵入性也很高，应用需要进行大量业务改造，成本较高。</p>
-<h5 id="重试机制"><a href="#重试机制" class="headerlink" title="重试机制"></a>重试机制</h5><p>重试机制的基本思路：</p>
-<p>​    一是定时扫描本地消息表，把未完成的消息或者失败的消息重新发送一遍；</p>
-<p>​    二是设定重试次数；</p>
-<p>​    三是保证操作的幂等性</p>
-<p>保证幂等性常用方法：</p>
-<p>1、通过唯一键值（流水号）做处理，即每次调用的时候传入唯一键值，通过唯一键值判断业务是否被操作，如果已被操作，则不再重复操作</p>
-<p>2、通过状态机处理，给业务数据设置状态，通过业务状态判断是否需要重复执行</p>
-<p>附上一篇讲的比较好的可靠消息最终一致性方案的文章：<a href="http://www.cnblogs.com/jajian/p/10014145.html" target="_blank" rel="noopener">可靠消息最终一致性方案的核心流程</a></p>
-<hr>
-<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p>1、 <a href="https://txlcn.org/zh-cn/index.html" target="_blank" rel="noopener">TX-LCN分布式事务框架官方文档</a></p>
-<p>2、<a href="http://springcloud.cn/view/374" target="_blank" rel="noopener">Spring Cloud的分布式事务框架压测第一轮</a></p>
-<p>3、<a href="http://www.cnblogs.com/jajian/p/10014145.html" target="_blank" rel="noopener">终于有人把“TCC分布式事务”实现原理讲明白了</a></p>
-<p>4、<a href="https://my.oschina.net/keking/blog/3011509" target="_blank" rel="noopener">Fescar分布式事务实现原理解析探秘</a></p>
-<p>5、<a href="https://github.com/seata/seata/wiki/概览" target="_blank" rel="noopener">Seata官方wiki</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/25/docker搭建elk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhong wenbin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/25/docker搭建elk/" class="post-title-link" itemprop="url">docker搭建elk</a>
-              
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-25 16:11:53 / 修改时间：16:34:57" itemprop="dateCreated datePublished" datetime="2019-07-25T16:11:53+08:00">2019-07-25</time>
-            </span>
-          
-
-          
+              <a href="/2019/08/01/初步了解分布式事务及解决方案/" rel="next" title="初步了解分布式事务及解决方案">
+                <i class="fa fa-chevron-left"></i> 初步了解分布式事务及解决方案
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h4 id="Docker部署ELK"><a href="#Docker部署ELK" class="headerlink" title="Docker部署ELK"></a>Docker部署ELK</h4><h5 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h5><p>​    在开源的日志管理方案中，最出名的莫过于 ELK 了。ELK 是三个软件的合称：<strong>E</strong>lasticsearch、<strong>L</strong>ogstash、<strong>K</strong>ibana。Spring Cloud作为现在最热门的微服务架构，其分布式的日志输出如果使用传统方式来进行分析查看会非常麻烦，可以直接用ELK来为其日志提供友好的服务，而kafka作为现在大数据消息队列的标准可以作为Spring Cloud与ELK之间的桥梁。(本文暂不集成Kafka)</p>
-<h5 id="1、Elasticsearch"><a href="#1、Elasticsearch" class="headerlink" title="1、Elasticsearch"></a>1、Elasticsearch</h5><p>Elasticsearch是一个基于Lucene和Restful接口的分布式搜索擎，设计目标就是要能够处理和搜索巨量的日志数据。</p>
-<h5 id="2、Logstash"><a href="#2、Logstash" class="headerlink" title="2、Logstash"></a>2、Logstash</h5><p>读取原始日志，并对其进行分析和过滤，然后将其转发给其他组件（比如 Elasticsearch）进行索引或存储。Logstash 支持丰富的 Input 和 Output 类型，能够处理各种应用的日志。</p>
-<h5 id="3、Kibana"><a href="#3、Kibana" class="headerlink" title="3、Kibana"></a>3、Kibana</h5><p>Kibana是一个基于 JavaScript 的 Web 图形界面程序，专门用于可视化 Elasticsearch 的数据。Kibana 能够查询 Elasticsearch 并通过丰富的图表展示结果。用户可以创建 Dashboard 来监控系统的日志。</p>
-<h5 id="4、日志处理流程"><a href="#4、日志处理流程" class="headerlink" title="4、日志处理流程"></a>4、日志处理流程</h5><p>下图展示了 Docker 部署环境下典型的 ELK 日志处理流程：<img src="/2019/07/25/docker搭建elk/1557038911006.png" alt></p>
-<p>Logstash 负责从各个 Docker 容器中提取日志，Logstash将日志转发到 Elasticsearch 进行索引和保存，Kibana 分析和可视化数据。</p>
-<h5 id="二、实践流程"><a href="#二、实践流程" class="headerlink" title="二、实践流程"></a>二、实践流程</h5><p>ELK 的部署方案可以非常灵活，在规模较大的生产系统中，ELK 有自己的集群，实现了高可用和负载均衡。这里我们采用最小部署方案：在容器中搭建 ELK。</p>
-<h5 id="1、Docker安装"><a href="#1、Docker安装" class="headerlink" title="1、Docker安装"></a>1、Docker安装</h5><p>通过这个地址下载安装：<a href="https://store.docker.com/editions/community/docker-ce-desktop-windows" target="_blank" rel="noopener">docker下载地址</a></p>
-<p>安装完成后打开 Windows PowerShell，输入docker –version，如果正常输出docker版本就可以了</p>
-<h5 id="2、安装ELK套件"><a href="#2、安装ELK套件" class="headerlink" title="2、安装ELK套件"></a>2、安装ELK套件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk</span><br></pre></td></tr></table></figure>
-
-<p>我们使用的是 <code>sebp/elk</code> 这个现成的 image，里面已经包含了整个 ELK stack。容器启动后 ELK 各组件将分别监听如下端口：</p>
-<p>5601 - Kibana web 接口<br>9200 - Elasticsearch JSON 接口<br>5044 - Logstash 日志接收接口</p>
-<h5 id="3、访问Kibana"><a href="#3、访问Kibana" class="headerlink" title="3、访问Kibana"></a>3、访问Kibana</h5><p>查看效果：<a href="http://localhost:5601" target="_blank" rel="noopener">http://localhost:5601</a></p>
-<p><img src="/2019/07/25/docker搭建elk/1557039435082.png" alt></p>
-<p>当前 Kibana 没有可显示的数据，因为当前 Elasticsearch 还没有任何日志数据。</p>
-<h5 id="4、访问ElasticSearch"><a href="#4、访问ElasticSearch" class="headerlink" title="4、访问ElasticSearch"></a>4、访问ElasticSearch</h5><p>查看效果：<a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a></p>
-<p><img src="/2019/07/25/docker搭建elk/1557039569329.png" alt></p>
-<p>确实，目前 Elasticsearch 没有与日志相关的 <code>index</code>。</p>
-<h5 id="5、使用TCP的方式"><a href="#5、使用TCP的方式" class="headerlink" title="5、使用TCP的方式"></a>5、使用TCP的方式</h5><p>由于sebp/elk中logstash的input的方式默认是filebeat,首先们需要进入elk容器中修改input方式。logstash默认会将etc/logstash/conf.d/中的配置文件进行整合然后启动。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it elk /bin/bash 进入容器</span><br><span class="line"> </span><br><span class="line">cd etc/logstash/conf.d/</span><br><span class="line"> </span><br><span class="line">vim 02-beats-input.conf 修改input配置</span><br><span class="line"> </span><br><span class="line">input &#123;    </span><br><span class="line">    tcp &#123;         </span><br><span class="line">        port =&gt; 5044         </span><br><span class="line">        codec =&gt; json_lines     </span><br><span class="line">        </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125; </span><br><span class="line">output&#123;  </span><br><span class="line">    elasticsearch &#123; </span><br><span class="line">    hosts =&gt; [&quot;localhost:9200&quot;] </span><br><span class="line">    </span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>保存文件退出，然后重启容器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart elk</span><br></pre></td></tr></table></figure>
-
-<h5 id="6、工程pom-xml文件添加依赖"><a href="#6、工程pom-xml文件添加依赖" class="headerlink" title="6、工程pom.xml文件添加依赖"></a>6、工程pom.xml文件添加依赖</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;net.logstash.logback&lt;/groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;logstash-logback-encoder&lt;/artifactId&gt;</span><br><span class="line">   &lt;version&gt;5.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="7、添加logback-spring-xml"><a href="#7、添加logback-spring-xml" class="headerlink" title="7、添加logback-spring.xml"></a>7、添加logback-spring.xml</h5><p>在工程<code>resources</code>目录下新增<code>logback-spring.xml</code>配置文件</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;!--该日志将日志级别不同的log信息保存到不同的文件中 --&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;include resource=<span class="string">"org/springframework/boot/logging/logback/defaults.xml"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;springProperty scope=<span class="string">"context"</span> name=<span class="string">"springAppName"</span></span><br><span class="line">                    source=<span class="string">"spring.application.name"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志在工程中的输出位置 --&gt;</span><br><span class="line">    &lt;property name=<span class="string">"LOG_FILE"</span> value=<span class="string">"$&#123;BUILD_FOLDER:-build&#125;/$&#123;springAppName&#125;"</span> /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 控制台的日志输出样式 --&gt;</span><br><span class="line">    &lt;property name=<span class="string">"CONSOLE_LOG_PATTERN"</span></span><br><span class="line">              value=<span class="string">"%clr(%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125;)&#123;faint&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;) %clr($&#123;PID:- &#125;)&#123;magenta&#125; %clr(---)&#123;faint&#125; %clr([%15.15t])&#123;faint&#125; %m%n$&#123;LOG_EXCEPTION_CONVERSION_WORD:-%wEx&#125;&#125;"</span> /&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- 控制台输出 --&gt;</span><br><span class="line">    &lt;appender name=<span class="string">"console"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span><br><span class="line">        &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"ch.qos.logback.classic.filter.ThresholdFilter"</span>&gt;</span><br><span class="line">            &lt;level&gt;INFO&lt;/level&gt;</span><br><span class="line">        &lt;/filter&gt;</span><br><span class="line">        &lt;!-- 日志输出编码 --&gt;</span><br><span class="line">        &lt;encoder&gt;</span><br><span class="line">            &lt;pattern&gt;$&#123;CONSOLE_LOG_PATTERN&#125;&lt;/pattern&gt;</span><br><span class="line">            &lt;charset&gt;utf8&lt;/charset&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 为logstash输出的JSON格式的Appender --&gt;</span><br><span class="line">    &lt;appender name=<span class="string">"logstash"</span></span><br><span class="line">              <span class="class"><span class="keyword">class</span></span>=<span class="string">"net.logstash.logback.appender.LogstashTcpSocketAppender"</span>&gt;</span><br><span class="line">        &lt;destination&gt;127.0.0.1:5044&lt;/destination&gt;</span><br><span class="line">        &lt;!-- 日志输出编码 --&gt;</span><br><span class="line">        &lt;encoder</span><br><span class="line">                <span class="class"><span class="keyword">class</span></span>=<span class="string">"net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder"</span>&gt;</span><br><span class="line">            &lt;providers&gt;</span><br><span class="line">                &lt;timestamp&gt;</span><br><span class="line">                    &lt;timeZone&gt;UTC&lt;/timeZone&gt;</span><br><span class="line">                &lt;/timestamp&gt;</span><br><span class="line">                &lt;pattern&gt;</span><br><span class="line">                    &lt;pattern&gt;</span><br><span class="line">                        &#123;</span><br><span class="line">                        <span class="string">"severity"</span>: <span class="string">"%level"</span>,</span><br><span class="line">                        <span class="string">"service"</span>: <span class="string">"$&#123;springAppName:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"trace"</span>: <span class="string">"%X&#123;X-B3-TraceId:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"span"</span>: <span class="string">"%X&#123;X-B3-SpanId:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"exportable"</span>: <span class="string">"%X&#123;X-Span-Export:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"pid"</span>: <span class="string">"$&#123;PID:-&#125;"</span>,</span><br><span class="line">                        <span class="string">"thread"</span>: <span class="string">"%thread"</span>,</span><br><span class="line">                        <span class="string">"class"</span>: <span class="string">"%logger&#123;40&#125;"</span>,</span><br><span class="line">                        <span class="string">"rest"</span>: <span class="string">"%message"</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &lt;/pattern&gt;</span><br><span class="line">                &lt;/pattern&gt;</span><br><span class="line">            &lt;/providers&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 日志输出级别 --&gt;</span><br><span class="line">    &lt;root level=<span class="string">"INFO"</span>&gt;</span><br><span class="line">        &lt;appender-ref ref=<span class="string">"console"</span> /&gt;</span><br><span class="line">        &lt;appender-ref ref=<span class="string">"logstash"</span> /&gt;</span><br><span class="line">    &lt;/root&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="8、启动项目工程"><a href="#8、启动项目工程" class="headerlink" title="8、启动项目工程"></a>8、启动项目工程</h5><p>日志就被发送到logstash中了。访问<a href="http://localhost:5601/" target="_blank" rel="noopener">http://localhost:5601/</a>可以进入kibana界面</p>
-<h5 id="9、配置Pattern"><a href="#9、配置Pattern" class="headerlink" title="9、配置Pattern"></a>9、配置Pattern</h5><p>配置pattern，输入*，匹配所有数据</p>
-<p>选择时间@timestamp，这样数据展示会以时间排序</p>
-<h5 id="10、查看日志"><a href="#10、查看日志" class="headerlink" title="10、查看日志"></a>10、查看日志</h5><p>点击discover，输入服务名称 <code>feign-consumer</code>即可查看相关日志</p>
-<p><img src="/2019/07/25/docker搭建elk/1557041279494.png" alt></p>
-<p>访问ElasticSearch <a href="http://localhost:9200/_search?pretty" target="_blank" rel="noopener">http://localhost:9200/_search?pretty</a> 也可查找到feign-consumer相关日志信息</p>
-<p><img src="/2019/07/25/docker搭建elk/1557041419125.png" alt></p>
-<p>11、整合filebeat</p>
-<p>docker run -d –name filebeat -v /etc/filebeat/filebeat.yml:/filebeat.yml  docker.elastic.co/beats/filebeat:7.0.1</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -1151,186 +651,15 @@
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhong wenbin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/18/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-18 10:22:31" itemprop="dateCreated datePublished" datetime="2019-07-18T10:22:31+08:00">2019-07-18</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-07-25 16:16:45" itemprop="dateModified" datetime="2019-07-25T16:16:45+08:00">2019-07-25</time>
-              </span>
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -1350,8 +679,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1443,6 +781,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ES定义"><span class="nav-number">1.</span> <span class="nav-text">ES定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lucene与ES关系"><span class="nav-number">2.</span> <span class="nav-text">Lucene与ES关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES主要解决问题"><span class="nav-number">3.</span> <span class="nav-text">ES主要解决问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES核心概念"><span class="nav-number">4.</span> <span class="nav-text">ES核心概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES数据结构"><span class="nav-number">5.</span> <span class="nav-text">ES数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#与关系数据库Mysql对比："><span class="nav-number">5.1.</span> <span class="nav-text">与关系数据库Mysql对比：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Elasticsearch的数据存储"><span class="nav-number">5.2.</span> <span class="nav-text">Elasticsearch的数据存储</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES集群工作原理"><span class="nav-number">6.</span> <span class="nav-text">ES集群工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用场景"><span class="nav-number">7.</span> <span class="nav-text">使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、使用ES作为主要的后端"><span class="nav-number">7.1.</span> <span class="nav-text">1、使用ES作为主要的后端</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、在现有系统中增加ES"><span class="nav-number">7.2.</span> <span class="nav-text">*2、在现有系统中增加ES</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、使用ES和现有的工具"><span class="nav-number">7.3.</span> <span class="nav-text">3、使用ES和现有的工具</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实践"><span class="nav-number">8.</span> <span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#源数据"><span class="nav-number">8.1.</span> <span class="nav-text">源数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#搭建集群"><span class="nav-number">8.2.</span> <span class="nav-text">搭建集群</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-、部署环境"><span class="nav-number">8.2.1.</span> <span class="nav-text">(1)、部署环境</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-、下载安装包以及jar包"><span class="nav-number">8.2.2.</span> <span class="nav-text">(2)、下载安装包以及jar包</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-、创建用户并赋予权限"><span class="nav-number">8.2.3.</span> <span class="nav-text">(3)、创建用户并赋予权限</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-、修改es配置文件"><span class="nav-number">8.2.4.</span> <span class="nav-text">(4)、修改es配置文件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-、修改系统配置"><span class="nav-number">8.2.5.</span> <span class="nav-text">(5)、修改系统配置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-、启动elasticsearch"><span class="nav-number">8.2.6.</span> <span class="nav-text">(6)、启动elasticsearch</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#7-、查看集群状态"><span class="nav-number">8.2.7.</span> <span class="nav-text">(7)、查看集群状态</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#8-、配置logstash"><span class="nav-number">8.2.8.</span> <span class="nav-text">(8)、配置logstash</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#9-、启动logstash"><span class="nav-number">8.2.9.</span> <span class="nav-text">(9)、启动logstash</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#10-、启动kibana查看索引信息"><span class="nav-number">8.2.10.</span> <span class="nav-text">(10)、启动kibana查看索引信息</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#单点ES"><span class="nav-number">8.3.</span> <span class="nav-text">单点ES</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-、数据输入"><span class="nav-number">8.3.1.</span> <span class="nav-text">(1)、数据输入</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-、数据索引"><span class="nav-number">8.3.2.</span> <span class="nav-text">(2)、数据索引</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#a、简单索引"><span class="nav-number">8.3.3.</span> <span class="nav-text">a、简单索引</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#b、聚合索引"><span class="nav-number">8.3.4.</span> <span class="nav-text">b、聚合索引</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ES集群"><span class="nav-number">8.4.</span> <span class="nav-text">ES集群</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-、集群搭建"><span class="nav-number">8.4.1.</span> <span class="nav-text">(1)、集群搭建</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-、数据输入"><span class="nav-number">8.4.2.</span> <span class="nav-text">(2)、数据输入</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-、数据索引"><span class="nav-number">8.4.3.</span> <span class="nav-text">(3)、数据索引</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用案例"><span class="nav-number">9.</span> <span class="nav-text">使用案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考资料："><span class="nav-number">10.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1561,6 +916,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   <script src="/js/next-boot.js?v=7.2.0"></script>
 
@@ -1574,6 +933,8 @@
 
   
 
+
+  
 
 
   
