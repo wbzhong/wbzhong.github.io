@@ -371,7 +371,7 @@
                 
               
 
-              <time title="创建时间：2019-08-01 10:00:25 / 修改时间：13:47:31" itemprop="dateCreated datePublished" datetime="2019-08-01T10:00:25+08:00">2019-08-01</time>
+              <time title="创建时间：2019-08-01 10:00:25 / 修改时间：13:50:58" itemprop="dateCreated datePublished" datetime="2019-08-01T10:00:25+08:00">2019-08-01</time>
             </span>
           
 
@@ -446,7 +446,8 @@
 <p>​    有了上述理论基础，我们来看一些常见的分布式事务解决方案。</p>
 <hr>
 <h4 id="一、2PC（两阶段提交）"><a href="#一、2PC（两阶段提交）" class="headerlink" title="一、2PC（两阶段提交）"></a>一、2PC（两阶段提交）</h4><h5 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h5><p>两阶段提交使用的就是数据库事务XA协议的原理。事务管理器要求每个涉及到事务的数据库预提交(precommit)此操作，并反映是否可以提交。事务协调器要求每个数据库提交数据，或者回滚数据。</p>
-<h5 id="2、原理图"><a href="#2、原理图" class="headerlink" title="2、原理图"></a>2、原理图</h5><h5 id><a href="#" class="headerlink" title></a><img src="/2019/08/01/初步了解分布式事务及解决方案/1556589824562.png" alt="1556589824562"></h5><h5 id="3、特点"><a href="#3、特点" class="headerlink" title="3、特点"></a>3、特点</h5><p><strong>优点：</strong> 尽量保证了数据的强一致，适合对数据强一致要求很高的项目。（其实也不能100%保证强一致）</p>
+<h5 id="2、原理图"><a href="#2、原理图" class="headerlink" title="2、原理图"></a>2、原理图</h5><p><img src="/2019/08/01/初步了解分布式事务及解决方案/1556589824562.png" alt="1556589824562"></p>
+<h5 id="3、特点"><a href="#3、特点" class="headerlink" title="3、特点"></a>3、特点</h5><p><strong>优点：</strong> 尽量保证了数据的强一致，适合对数据强一致要求很高的项目。（其实也不能100%保证强一致）</p>
 <p><strong>缺点：</strong> 牺牲了可用性，对性能影响较大，不适合高并发高性能场景。</p>
 <hr>
 <h4 id="二、TX-LCN事务模式"><a href="#二、TX-LCN事务模式" class="headerlink" title="二、TX-LCN事务模式"></a>二、TX-LCN事务模式</h4><h5 id="1、框架背景"><a href="#1、框架背景" class="headerlink" title="1、框架背景"></a><strong>1、框架背景</strong></h5><p>​    LCN框架早期设计步骤为：锁定事务单元(lock)、确认事务模块状态(confirm)、通知事务(notify)，各取其首字母得名。框架从2017年6月份发布的1.0版本，到现在已经发展到了5.0.2版本。5.0以后由于框架兼容了LCN、TCC、TXC三种事务模式，改名为TX-LCN分布式事务框架。</p>
